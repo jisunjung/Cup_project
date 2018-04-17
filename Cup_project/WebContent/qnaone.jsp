@@ -24,7 +24,7 @@
 	}
 	#table {
 		width: 1200px;
-		margin: 10px 360px;
+		margin: 100px 360px;
 	}
 	#table_contents, #inner_contents {
 		border-left: none;
@@ -50,7 +50,7 @@
 	}
 	#table_contents {
 		width: 1200px;
-		margin: 20px 0 0 0;
+		margin: 0;
 	}
 	.no {
 		width: 100px !important; 
@@ -281,6 +281,7 @@
 </script>
 </head>
 <body>
+<div id="board">
 	<div id="table">
 		<div id="subject">
 			<span>Q & A</span>
@@ -491,5 +492,6 @@
 	<div id="page_footer">
 		<span>&nbsp;</span>
 	</div>
+</div>
 </body>
 </html>

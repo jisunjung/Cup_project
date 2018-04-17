@@ -23,7 +23,7 @@
 	}
 	#table {
 		width: 1200px;
-		margin: 10px 360px;
+		margin: 100px 360px;
 	}
 	#board_table > tr {
 		height: 30px;
@@ -83,6 +83,7 @@
 		border: 1px solid #FFDF24;
 		padding-left: 5px;
 		margin-left: 15px;
+		font-style: oblique;
 	}
 	#qnasearch_btn {
 		width: 50px;
@@ -102,6 +103,7 @@
 		text-align: center;
 		/* font-weight: bold; */
 		color: #a7a7a7;
+		margin: 20px auto; 
 	}
 	#reline {
 		height: 30px;
@@ -193,21 +195,21 @@
 </script>
 </head>
 <body>
-<div id="board_table">
+<div id="board">
 	<div id="table">
 		<div id="subject">
 			<span>Q & A</span>
 		</div>
+		<form action="boardsearch.bizpoll" method="GET" name ="frm_search">
 		<div>
 			<input type="hidden" name="code" id="code" value="${code}">
 			<span width="100">&nbsp;</span>
 			<span><a href="#"><input type="button" id="wr_btn" value="글쓰기"></a></span>
 			<!-- <input type = "hidden" id="Session" name="Session" value=""> -->
-		<form action="boardsearch.bizpoll" method="GET" name ="frm_search">
-			<input id="qnasearch_btn" class="qnasearch" type="submit" value="검색">
-			<input id="qnasearch_keyword" class="qnasearch" name="search_keyword" type="text" placeholder="검색할 값을 입력해주세요.">
-		</form>
+				<input id="qnasearch_btn" class="qnasearch" type="submit" value="검색">
+				<input id="qnasearch_keyword" class="qnasearch" name="search_keyword" type="text" placeholder="검색어">
 		</div>
+		</form>
 		<table id="big_table">
 			<tbody>
 				<tr>
@@ -336,6 +338,7 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
 </div>
 </body>
 </html>
