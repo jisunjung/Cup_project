@@ -12,8 +12,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <title>TeaFunny & Cup</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="icon" type="image/png" href="image/cupfavi.png">
 <style type="text/css">
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
@@ -24,7 +24,7 @@
 		margin: 0;
 		/* padding: 0; */
 		list-style-type: none;
-		font-family: 'Hanna', serif;
+		font-family: 'Hanna', serif !important;
 		/* font-family: 'Nanum Gothic', serif; */
 	}
 	
@@ -257,7 +257,7 @@
 			position: absolute;
 			} */
 			
-		#fafa {
+		#link #fafa {
 		font-size: 16px;
 		color: #555555;
 	}
@@ -281,17 +281,54 @@
 		color: #FFDF24;
 	}
 	
-	/* 로그인 */
-	#wrap {
-		margin: 15px auto;
-		width: 466px;
-		height: 350px;
+	
+	/* modal */
+	.mask {
+		width:100%;
+		height:100%;
+		position:fixed;
+		left:0; top:0;
+		z-index:10;
+		background:#000;
+		opacity:.5;
+		filter:alpha(opacity=50);
+	}
+ 	#modalLayer {
+ 		display:none;
+ 		position:relative;
+ 	}
+ 	#modalLayer .modalContent	{
+ 		width: 400px;
+ 		height: 350px;
+ 		padding:20px;
+ 		position:fixed;
+ 		left:50%;
+ 		top:50%;
+ 		z-index:200;
+ 		background:#fff;
+ 		border-radius: 10px;
+ 		border: 5px solid #FFDF24;
+ 	}
+	#modalLayer .modalContent button {
+		
+		position:absolute;
+		right:0; 
+		top:0;
+		cursor:pointer;
+		border: none;
+		background-color: white;
+		color: #ddd;
+		font-size: 20px;
+		border: none;
+		border-radius: 10px;
+		margin: 5px 5px 0 0;
+		
 	}
 	
+	/* 로그인 */
 	#login_header {
 		height: 39px;
-		padding-top: 16px;
-		padding-bottom: 5px;
+		padding: 5px auto;
 		overflow: hidden;
 	}
 	
@@ -316,8 +353,8 @@
 	#login_content {
 		width: 270px;
 		height: 250px;
-		padding: 0 25px;
-		/*  border: 1px solid #ededed;  */
+		padding: 0;
+		/* border: 1px solid #ededed; */
 		text-align: left;
 		display: inline-block;
 		position: relative;
@@ -398,79 +435,99 @@
 		padding-top: 8px;
 		padding-left: 70px;
 	}
+	
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-
-
-		//유효성 체크
-		$(document).on("click", "#btn_login", function(){
-			
-				var frm = $("#login_frm");
-				var id = $("#login_id");
-				var pw = $("#login_pw");
-				
-				var lid = id.val();
-				if (lid == ""){
-					id.focus();
-					$("#err").text("아이디를 입력해주세요.").css("color","red");
-					return false;
-				}
-				var lpw = pw.val();
-				if (lpw == ""){
-					pw.focus();
-					$("#err").text("비밀번호를 입력해주세요.").css("color","red");
-					return false;
-				}
-		
-//			 if(lid != "" || lpw != "") {
-				 $.ajax({
-					 url: "loginajax.bizpoll",
-					 type: "POST",
-					 dataType: "JSON",
-					 data:"id="+ lid +"&pw="+ lpw,
-					 success: function(data) {
-						 if(data.flag == "1"){
-							 alert("로그인 성공");
-							 $("#loginck").val("1");
-							 frm.submit();
-							 //index 페이지로 이동
-						 } else if(data.flag == "0"){
-							 alert("로그인 실패");
-							 $("#login_id").select();
-							 $("#err").text("일치하는 회원정보가 없습니다.").css("color","red");
-							 /* $("#loginck").val("0"); */
-							 /* return false; */
-						 }
-					 },
-					 error:function() {
-						 alert("System Error!!!");
-					 }
-				 });
-				 
-				
-//			 }
+	//*로그인 모달창
+	$(document).ready(function(){
+		  var modalLayer = $("#modalLayer");
+		  var modalLink = $(".modalLink");
+		  var modalCont = $(".modalContent");
+		  var marginLeft = modalCont.outerWidth()/2;
+		  var marginTop = modalCont.outerHeight()/2; 
+		 
+		  modalLink.click(function(){
+		    modalLayer.fadeIn("slow");
+		    modalCont.css({"margin-top" : -marginTop, "margin-left" : -marginLeft});
+		    $(this).blur();
+		    $(".modalContent > a").focus(); 
+		    return false;
+		  });
+		 
+		  $(".modalContent > button").click(function(){
+		    modalLayer.fadeOut("slow");
+		    modalLink.focus();
+		  });        
 		});
+
+	//*유효성 체크
+	$(document).on("click", "#btn_login", function(){
 		
-		$(document).on("click", "#logout", function(){
+			var frm = $("#login_frm");
+			var id = $("#login_id");
+			var pw = $("#login_pw");
+			
+			var lid = id.val();
+			if (lid == ""){
+				id.focus();
+				$("#err").text("아이디를 입력해주세요.").css("color","red");
+				return false;
+			}
+			var lpw = pw.val();
+			if (lpw == ""){
+				pw.focus();
+				$("#err").text("비밀번호를 입력해주세요.").css("color","red");
+				return false;
+			}
+	
+	if(lid != "" || lpw != "") {
 			 $.ajax({
-				 url:"loginout.bizpoll",
+				 url: "loginajax.bizpoll",
 				 type: "POST",
-				 dataType:"JSON",
+				 dataType: "JSON",
+				 data:"id="+ lid +"&pw="+ lpw,
 				 success: function(data) {
 					 if(data.flag == "1"){
-						 alert("로그아웃 성공");
-						 location.href="index.bizpoll";
-					 } else if(data.flag == "0"){
-						 alert("로그아웃 실패");
+						 alert("로그인 성공");
+						 $("#loginck").val("1");
+						 frm.submit();
+						 //index 페이지로 이동
+					 } else{
+						 alert("로그인 실패");
+						 $("#login_id").select();
+						 $("#err").text("일치하는 회원정보가 없습니다.").css("color","red");
+						 $("#loginck").val("0");
+						 return false; 
 					 }
 				 },
 				 error:function() {
 					 alert("System Error!!!");
 				 }
 			 });
-		});
-		
+			 
+			
+		 }
+	});
+
+	$(document).on("click", "#logout", function(){
+		 $.ajax({
+			 url:"loginout.bizpoll",
+			 type: "POST",
+			 dataType:"JSON",
+			 success: function(data) {
+				 if(data.flag == "1"){
+					 alert("로그아웃 성공");
+					 location.href="index.bizpoll";
+				 } else if(data.flag == "0"){
+					 alert("로그아웃 실패");
+				 }
+			 },
+			 error:function() {
+				 alert("System Error!!!");
+			 }
+		 });
+	});
 </script>
 </head>
 <body>
@@ -483,16 +540,15 @@
 		<div id="inner1" class="inner">
 			<div class="head_inner">
 				<div id="link">
-					<a href="#">BOOKMARK+</a> <i id="fafa"
-						class="fa fa-facebook-official"></i> <i id="fafa"
-						class="fa fa-instagram"></i> <i id="fafa" class="fa fa-envelope-o"></i>
+					<a href="#">BOOKMARK+</a>
+					<i id="fafa" class="fa fa-facebook-official"></i>
+					<i id="fafa" class="fa fa-instagram"></i>
+					<i id="fafa" class="fa fa-envelope-o"></i>
 				</div>
 				<ul id="member">
 					<c:choose>
 						<c:when test="${empty sessionScope.loginUser}">
-							<li><a
-								onclick="document.getElementById('id01').style.display='block'"
-								style="cursor: pointer">로그인</a></li>
+							<li><a href="#modalLayer" class="modalLink">로그인</a></li>
 
 							<li><a href="constract.bizpoll">회원가입</a></li>
 						</c:when>
@@ -514,50 +570,10 @@
 						</div></li>
 					<li><a href="qna.bizpoll">고객행복센터</a></li>
 				</ul>
-				<div id="id01" class="w3-modal" name="id001">
-					<div class="w3-modal-content">
-						<div class="w3-container">
-							<span
-								onclick="document.getElementById('id01').style.display='none'"
-								class="w3-button w3-display-topright">&times;</span>
-							<!---------------------------------------------------------- LOGIN modal ---------------------------------------------------------->
-							<div id="wrap">
-								<div id="login_header">
-									<h3 id="login_title">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;L O G I
-										N</h3>
-								</div>
-								<div id="cup_content">
-									<div id="login_content">
-										<div id="login_area">
-											<div id="subtitle"></div>
-											<div id="container">
-												<div id="login_form">
-													<form action="loginck.bizpoll" method="POST" id="login_frm"
-														name="login_frm">
-														<input class="idpw" type="text" id="login_id"
-															name="login_id" placeholder="ID" /> <input class="idpw"
-															type="password" id="login_pw" name="login_pw"
-															placeholder="PASSWORD" /> <input type="hidden"
-															id="loginck">
-													</form>
-												</div>
-											</div>
-											<span class="err_check_msg" id="err">.</span> <a href="#"
-												id="btn_login">sign in </a>
-										</div>
-										<div id="login_help">
-											<a href="constract.bizpoll">회원가입</a> <span class="right_bar"></span>
-											<a href="#">아이디 찾기</a> <span class="right_bar"></span> <a
-												href="#">비밀번호 찾기</a>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!---------------------------------------------------------- LOGIN modal ---------------------------------------------------------->
-						</div>
-					</div>
-				</div>
-
+<!-- W3School 모달을 지운 위치 -->
+				
+				
+				
 			</div>
 		</div>
 		<!-- 두번째 줄 시작, 이미지 로고 -->
@@ -607,5 +623,44 @@
 		</div>
 		
 	</div>
+	
+<!-- modal_login -->
+	<div id="modalLayer">
+		<div class="modalContent">
+				<div id="login_header">
+					<h3 id="login_title">L O G I N</h3>
+				</div>
+				<div id="cup_content">
+					<div id="login_content">
+						<div id="login_area">
+							<div id="subtitle"></div>
+							<div id="container">
+								<div id="login_form">
+									<form action="loginck.bizpoll" method="POST" id="login_frm" name="login_frm">
+										<input class="idpw" type="text" id="login_id" name="login_id" placeholder="ID" />
+										<input class="idpw" type="password" id="login_pw" name="login_pw" placeholder="PASSWORD" />
+										<input type="hidden" id="loginck">
+									</form>
+								</div>
+							</div>
+							<span class="err_check_msg" id="err">.</span>
+							<a href="#" id="btn_login">sign in </a>
+						</div>
+						<div id="login_help">
+							<a href="constract.bizpoll">회원가입</a>
+							<span class="right_bar"></span>
+							<a href="#">아이디 찾기</a>
+							<span class="right_bar"></span>
+							<a href="#">비밀번호 찾기</a>
+						</div>
+					</div>
+				</div>
+			<button type="button"><i id="fafa" class="fa fa-close"></i></button>
+		</div>
+	</div>
+	
+	
+	
+	
 </body>
 </html>

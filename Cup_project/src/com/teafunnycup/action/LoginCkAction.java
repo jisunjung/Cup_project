@@ -25,8 +25,13 @@ public class LoginCkAction implements Action{
 		MemberDAO mDao = MemberDAO.getInstance();
 		MemberDTO mDto = new MemberDTO(mid, mpw);
 		mDto = mDao.sessionLogin(mDto);
-		System.out.println("!!!!!로그인 성공!!!!!");
-		System.out.println(mDto.getMid() + ", " + mDto.getMname());
+		
+		if(mDto.getMname() != null) {
+			System.out.println("!!!!!로그인 성공!!!!!");
+			System.out.println(mDto.getMid() + ", " + mDto.getMname());
+		} else {
+			System.out.println("!!!!!로그인 실패, 해당 아이디의 회원 찾을 수 없음!!!!!");
+		}
 		
 		if(mDto != null) {
 			session.removeAttribute("loginUser"); // 세션 초기화 ( 혹시 모를 남아있는 값 제거)

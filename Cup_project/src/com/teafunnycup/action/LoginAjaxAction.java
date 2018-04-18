@@ -35,6 +35,8 @@ public class LoginAjaxAction implements Action{
 				jObj.put("id", mid);
 				jObj.put("pw", mpw);
 				
+				System.out.println("AJAX TEST!!!!!! mid = " + mid + " , mpw = " + mpw);
+				
 				response.setContentType("application/x-json); charset=UTF-8");
 				response.getWriter().println(jObj);
 				}

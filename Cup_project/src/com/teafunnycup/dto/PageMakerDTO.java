@@ -1,5 +1,7 @@
 package com.teafunnycup.dto;
 
+// 페이지 넘버를 위한 PageMAkerDTO
+
 public class PageMakerDTO {
 	private int totalCount;				// 전체 데이터 개수
 	private int startPage;				// 시작 페이지 번호

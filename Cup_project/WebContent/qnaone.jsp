@@ -34,6 +34,8 @@
 	}
 	table {
 		 /* border-collapse: collapse; */
+		 table-layout: fixed;
+		 word-break: break-all;
 	}
 	#subject {
 		font-size: 45px;
@@ -60,6 +62,10 @@
 		width: 700px !important;
 		text-align: left;
 		padding-left: 100px !important; 
+	}
+	con {
+		width: 700px !important;
+		text-align: left;
 	}
 	.name {
 		width: 130px !important;
@@ -148,6 +154,9 @@
 		text-decoration: none;
 		font-size: 17px;
 	}
+	form {
+		font-family: 'Hanna', serif !important;	
+	}
 	#wr_btn {
 		background-color: #FFDF24;
 		border: none;
@@ -158,7 +167,9 @@
 		color: white;
 		/* font-weight: bold; */
 		font-size: 15px;	
-		cursor:pointer;	
+		cursor:pointer;
+		font-family: 'Hanna', serif !important;	
+		
 	}
 	#recount {
 		font-size: 18px;
@@ -272,6 +283,7 @@
 	 		 data: "rno=" + rno,
 	 		 success: function(data) {
 	 			alert("댓글 삭제 성공");
+	 			//location
 	 		 },
 	 		 error: function() {
 	 			 alert("System Error!!!");
@@ -297,7 +309,7 @@
 						<td class="no">
 							<span>NO</span>
 						</td>
-						<td class="contents">
+						<td id="con">
 							<span>CONTENTS</span>
 						</td>
 						<td class="name">

@@ -180,7 +180,16 @@ public class BoardDAO {
 			sqlSession = sqlSessionFactory.openSession();
 			List<BoardDTO> list = null;
 			
+			String flag = criDto.getFlag();
+			
 			try {
+				System.out.println("Keyword ===>" + criDto.getKeyword());
+				System.out.println("Flag ===>" + flag);
+				
+				if(flag.equals("1")) {
+					
+				}
+				
 				list = sqlSession.selectList("boardSearch", criDto);
 				
 				for (BoardDTO boardDTO : list) {
@@ -198,7 +207,32 @@ public class BoardDAO {
 				sqlSession.close();
 			}
 			return list;
-		}	
+		}
+		public String boardSearchSelectBox(CriteriaDTO criDto){
+			
+			String flag = criDto.getFlag();
+			String selflag = null;
+			
+			try {
+				if(flag.equals("1")) {
+					selflag = "전체";
+				} else if(flag.equals("2")) {
+					selflag = "제목";
+				} else if(flag.equals("3")) {
+					selflag = "내용";
+				} else if(flag.equals("4")) {
+					selflag = "제목+내용";
+				} else if(flag.equals("5")) {
+					selflag = "작성자";
+				}
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			}
+			return selflag;
+		}
 	
 }
-	
+

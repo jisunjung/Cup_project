@@ -1,12 +1,22 @@
 package com.teafunnycup.dto;
 
+// 한페이지에 10건씩 보여주기 위해 CriteriaDTO
 // 검색기준 또는 분류기준
 public class CriteriaDTO {
 	
 	private int page;						// 페이지 번호 (하단의 번호들 클릭)
 	private int perPageNum;					// 한 페이지에 보여줄 게시글 수
 	private String keyword;
+	private String flag;
 	
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
 
 	public CriteriaDTO() {
 		this.page = 1;

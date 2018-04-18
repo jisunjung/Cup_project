@@ -29,11 +29,11 @@
 		height: 30px;
 	}
 	.no {
-		width: 100px;
+		width: 100px!important;
 		text-align: center;
 	}
 	.contents {
-		width: 700px;
+		width: 700px!important;
 		text-align: left;
 		padding-left: 100px; 
 	}
@@ -41,15 +41,15 @@
 		text-align: center;
 	}
 	.name {
-		width: 130px;
+		width: 130px!important;
 		text-align: center;
 	}
 	.date {
-		width: 170px;
+		width: 170px!important;
 		text-align: center;
 	}
 	.view {
-		width: 100px;
+		width: 100px!important;
 		text-align: center;
 	}
 	#re {
@@ -70,6 +70,8 @@
 	#table_top {
 		border-top: 2px solid #FFDF24;
 		border-bottom : 2px solid #FFDF24;
+		width: 1200px;
+		height: 40px;
 	}
 	.qnasearch {
 		float: right;
@@ -124,30 +126,28 @@
 	a {
 		text-decoration: none;
 	}
-	#pagenumtr {
-		
+	#pageline {
+		text-align: center;
 	}
-	#pagenumber_table {
+	#pagetable {
 		border-collapse: collapse;
-		border: 1px solid #ddd;
-	}
-	#pagenumber_table tr, #pagenumber_table td {
-		/* border: 1px solid #ddd; */
-		border: 1px solid #FFDF24;
-	 }
-	 #pagenumber_table tr {
-	 	height: 40px;
-	 }
-	 .active > a{
-	 	color: #990000;
-	 }
-	 #pagenumber_table td {
-	 	text-align: center;
-	 	width: 40px;
+		text-align: center;
 	 	line-height: 40px;
 	 	background-color: white;
 	 	font-weight: bold;
-	 	color: #FFDF24;
+	}
+	#pagetable tr, #pagetable td {
+		border: 1px solid #FFDF24;
+	 }
+	 #pagetable tr {
+	 	height: 40px;
+	 }
+	 #pagetable td {
+	 	width: 40px;
+	 	color: #FFDF24!important;
+	 }
+	 .active > a{
+	 	color: #990000!important;
 	 }
 	 #big_table {
 	 	margin-bottom: 150px;
@@ -155,9 +155,18 @@
 	 /* #recount{
 	 	color: #990000;
 	 } */
-	 #qna_select {
-		width: 150px;
+	 #selsearch {
+		width: 80px;
 		height: 26px;
+	}
+	.searchkey_ms {
+		text-align: center;
+		padding-bottom: 10px;
+    	padding-top: 5px;
+    	font-size: 17px;
+	}
+	#key {
+		color: #FFBB00;
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -188,10 +197,29 @@
 		
 		
 });
+	
 	$(document).on("click","#qnasearch_btn",function(){
 		//alert("test");
+		
 		$("#frm_search").submit();
+		/* 
+		$("#searchkey_ms").css("color","#555555");
+		$("#key").css("display", "block"); */
+		
+		
 	});
+	/* $(document).ready(function(){
+		var listcounter = $("#listcounter").val();
+		var searchkeyword_block = $("#searchkeyword_block").val();
+		var searchkeyword_none = $("#searchkeyword_none").val();
+		
+		if(listcounter == true){
+			searchkeyword_block = 1;
+		} else{
+			searchkeyword_none = 1;
+		}
+		
+	}) */
 </script>
 </head>
 <body>
@@ -201,55 +229,70 @@
 			<span>Q & A</span>
 		</div>
 		<form action="boardsearch.bizpoll" method="GET" name ="frm_search">
-		<div>
-			<input type="hidden" name="code" id="code" value="${code}">
-			<span width="100">&nbsp;</span>
-			<span><a href="#"><input type="button" id="wr_btn" value="글쓰기"></a></span>
-			<!-- <input type = "hidden" id="Session" name="Session" value=""> -->
-				<input id="qnasearch_btn" class="qnasearch" type="submit" value="검색">
-				<input id="qnasearch_keyword" class="qnasearch" name="search_keyword" type="text" placeholder="검색어">
-		</div>
-		</form>
+				<div>
+					<input type="hidden" name="code" id="code" value="${code}">
+					<span width="100">&nbsp;</span> <span><a href="#">
+					<input type="button" id="wr_btn" value="글쓰기"></a></span>
+					<!-- <input type = "hidden" id="Session" name="Session" value=""> -->
+					<input id="qnasearch_btn" class="qnasearch" type="submit" value="검색">
+					<input id="qnasearch_keyword" class="qnasearch" name="search_keyword" type="text" placeholder="검색어">
+					<select id="selsearch" name="selsearch" class="qnasearch" >
+							<option value="1">전체</option>
+							<option value="---------------">---------------</option>
+							<option value="2">제목</option>
+							<option value="3">내용</option>
+							<option value="4">제목 + 내용</option>
+							<option value="5">작성자</option>
+						</select>
+				</div>
+			</form>
 		<table id="big_table">
 			<tbody>
 				<tr>
-					<td>
-					
-						<table width="1200" height="40" id="table_top">
+			<!-- 검색결과 표시줄 -->
+			<%-- <input type="hidden" id="listcounter" name="listcounter" value="${listcounter}"> --%>
+				<c:choose>
+				<c:when test="${listcounter=='ture'}"> 
+					<td class="searchkey_ms"  id="searchkeyword_block">
+						<span>『 ${selflag} 』&nbsp;&nbsp;</span>
+						<span id="key">'${keyword}'</span>
+						<span>&nbsp;&nbsp;검색&nbsp;&nbsp;결과&nbsp;:&nbsp;&nbsp;${boardlist.size()}&nbsp;건</span>
+					</td>
+				</c:when>
+				<c:when test="${listcounter=='false'}">
+					<td class="searchkey_ms" id="searchkeyword_none">
+						<span>&nbsp;</span>
+					</td>
+				</c:when>
+				</c:choose>
+				
+				</tr>
+				
+				<tr>
+					<td id="table_top">
+						<table>
 							<tbody>
 								<tr>
-									<td class="no">
-										<span>NO</span>
-									</td>
-									<td class="contents" id="contents">
-										<span>CONTENTS</span>
-									</td>
-									<td class="name" id="name">
-										<span>NAME</span>
-									</td>
-									<td class="date" id="date">
-										<span>DATE</span>
-									</td>
-									<td class="view" id="view">
-										<span>VIEW</span>
-									</td>
+									<td class="no"><span>NO</span></td>
+									<td class="contents" id="contents"><span>CONTENTS</span></td>
+									<td class="name" id="name"><span>NAME</span></td>
+									<td class="date" id="date"><span>DATE</span></td>
+									<td class="view" id="view"><span>VIEW</span></td>
 								</tr>
 							</tbody>
 						</table>
 					</td>
 				</tr>
-			</tbody>
+				
 			<!-- 게시물 시작 -->
-			<tbody>
 				<tr>
-					<td>
-						<table id="board_table">
+					<td id="board_table">
+						<table>
 							<tbody>
-						<c:forEach items="${boardlist}" var="bDto">
+							
+								<c:forEach items="${boardlist}" var="bDto">
 								<tr id="line">
-									<td class="no">
-										<span>${bDto.bno}</span>
-									</td>
+									<td class="no"><span>${bDto.bno}</span></td>
 									<td class="contents">
 										<table>
 											<tr>
@@ -262,77 +305,40 @@
 											</tr>
 										</table>
 									</td>
-									<td class="name">
-										<span>${bDto.writer}</span>
-									</td>
-									<td class="date">
-										<%-- <span>${bDto.regdate}</span> --%>
-										<span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bDto.regdate}"/></span>
-									</td>
-									</td>
-									<td class="view" id="view">
-										<span>${bDto.viewcnt}</span>
-									</td>
+									<td class="name"><span>${bDto.writer}</span></td>
+									<td class="date"><span><fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${bDto.regdate}"/></span></td>
+									<td class="view" id="view"><span>${bDto.viewcnt}</span></td>
 								</tr>
-								<!-- <tr id="reline">
-									<td class="no">
-										<span>&nbsp;</span>
-									</td>
-									<td class="contents">
-										<a>
-											<span id="re">RE:</span>
-											<span class="text_black">답변완료♥</span>
-										</a>
-									</td>
-									<td class="name">
-										<span>관리자</span>
-									</td>
-									<td class="date">
-										<span>&nbsp;</span>
-									</td>
-									<td class="view">
-										<span>&nbsp;</span>
-									</td>
-								</tr> -->
 								<tr>
 									<td colspan="5" bgcolor="#ddd" height="1"></td>
 								</tr>
-						
-						</c:forEach>
-							</tbody>
-								<tr id="number_tr">
-									<td class="no">
-										<span>&nbsp;</span>
-									</td>
-									<td id="page_td">
-										<table id="pagenumber_table">
-											<tr id="pagenumtr">
-											<c:if test="${pageMaker.prev}">
-												<td><a href="qna.bizpoll?page=${pageMaker.startPage - 1}">◀</a></td>
-											</c:if>
-											
-											<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-												<td <c:out value="${pageMaker.criDto.page == idx? 'class=active':''}"/>>
-													<a href="qna.bizpoll?page=${idx}">${idx}</a>
-												</td>
-											</c:forEach>
-											
-											<c:if test="${pageMaker.next}">
-												<td><a href="qna.bizpoll?page=${pageMaker.endPage + 1}">▶</a></td>
-											</c:if>
+								</c:forEach>
+								
+								<tr>
+									<td colspan="5" id="pageline">
+										<table id="pagetable">
+											<tr>
+												<c:if test="${pageMaker.prev}">
+													<td>
+														<a href="qna.bizpoll?page=${pageMaker.startPage - 1}">◀</a>
+													</td>
+												</c:if>
+												<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+													<td>
+														<a<c:out value="${pageMaker.criDto.page == idx? 'class=active':''}"/>></a>
+														<a href="qna.bizpoll?page=${idx}">${idx}</a>
+													</td>													
+												</c:forEach>
+												<c:if test="${pageMaker.next}">
+													<td>
+														<a href="qna.bizpoll?page=${pageMaker.endPage + 1}">▶</a>
+													</td>
+												</c:if>	
 											</tr>
 										</table>
 									</td>
-									<td class="name">
-										<span>&nbsp;</span>
-									</td>
-									<td class="date">
-										<span>&nbsp;</span>
-									</td>
-									<td class="view">
-										<span>&nbsp;</span>
-									</td> 
 								</tr>
+							</tbody>
 						</table>
 					</td>
 				</tr>
