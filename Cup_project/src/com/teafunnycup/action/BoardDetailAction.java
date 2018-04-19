@@ -44,17 +44,15 @@ public class BoardDetailAction implements Action {
 		// 상세 게시글 댓글수 카운트
 		int re_count;
 		
-		
 		re_count = rDao.replyCount(bno);
-		//System.out.println("test1111111111111111111111111111111111");
 		System.out.println("re_count : " + re_count);
-		//System.out.println("test1111111111111111111111111111111111");
 		request.setAttribute("re_count", re_count);
-		//System.out.println("test2222222222222222222222222222222222");
+		
+		
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);
-		//System.out.println("test3333333333333333333333333333333333");		
 		return forward;
 		
 	}

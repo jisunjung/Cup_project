@@ -17,6 +17,8 @@ public class LoginCkAction implements Action{
 		HttpSession session = request.getSession();
 		String url = null;
 		
+		int flag=0;
+		
 		String mid = request.getParameter("login_id");
 		String mpw = request.getParameter("login_pw");
 		System.out.println(mid + ", " + mpw);
@@ -29,16 +31,19 @@ public class LoginCkAction implements Action{
 		if(mDto.getMname() != null) {
 			System.out.println("!!!!!로그인 성공!!!!!");
 			System.out.println(mDto.getMid() + ", " + mDto.getMname());
-		} else {
-			System.out.println("!!!!!로그인 실패, 해당 아이디의 회원 찾을 수 없음!!!!!");
-		}
-		
-		if(mDto != null) {
+			
+			
 			session.removeAttribute("loginUser"); // 세션 초기화 ( 혹시 모를 남아있는 값 제거)
 			session.setAttribute("loginUser", mDto); // 세션에 값 담기
 			url = "index.bizpoll";
 			
+			flag = 1;
+		} else {
+			System.out.println("!!!!!로그인 실패, 해당 아이디의 회원 찾을 수 없음!!!!!");
 		}
+		
+		
+		
 		/*int flag = mDao.memLogin(mid,mpw);
 		
 		if(flag == 0) {
@@ -49,11 +54,11 @@ public class LoginCkAction implements Action{
 			url = "index.bizpoll";
 		}*/
 		
-		ActionForward forward = new ActionForward();
+		/*ActionForward forward = new ActionForward();
 		forward.setPath(url);
-		forward.setRedirect(false);
+		forward.setRedirect(false);*/
 				
-		return forward;
+		return null;
 		
 	}
 }

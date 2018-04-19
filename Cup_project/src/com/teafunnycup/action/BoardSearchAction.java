@@ -44,6 +44,7 @@ public class BoardSearchAction implements Action {
 		criDto.setPage(page);
 		
 		// 검색된 게시판 리스트 출력
+		
 		criDto.setFlag(flag);		// criDto에 검색조건 입력
 		BoardDAO bDao = BoardDAO.getInstance();		//BoardDAO bDao = new BoardDAO();
 		String keyword = request.getParameter("search_keyword");
@@ -54,6 +55,18 @@ public class BoardSearchAction implements Action {
 		List<BoardDTO> boardlist = bDao.boardSearch(criDto);
 		
 		String selflag = bDao.boardSearchSelectBox(criDto);
+		
+		
+		// 검색된 키워드에 맞는 게시판 리스트 페이지
+		
+		PageMakerDTO pageMaker = new PageMakerDTO();
+		pageMaker.setCriDto(criDto);
+		int scountpage = bDao.boardSPaging(criDto);
+		pageMaker.setTotalCount(scountpage);
+		
+		request.setAttribute("pageMaker",  pageMaker);
+		
+
 		
 		boolean listcounter;
 		
@@ -66,19 +79,14 @@ public class BoardSearchAction implements Action {
 			System.out.println("listcounter======================================"+listcounter);
 		}
 		
-		
+		// 검색된 리스트
 		request.setAttribute("boardlist", boardlist); 
+		// 검색분류
 		request.setAttribute("selflag", selflag);
-		
+		//
 		request.setAttribute("listcounter", listcounter);
 		
 		
-		PageMakerDTO pageMaker = new PageMakerDTO();
-		pageMaker.setCriDto(criDto);
-		int result = bDao.totalCount(criDto);
-		pageMaker.setTotalCount(result);
-		
-		request.setAttribute("pageMaker",  pageMaker);
 		
 		
 		

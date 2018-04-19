@@ -35,7 +35,7 @@
 	table {
 		 /* border-collapse: collapse; */
 		 table-layout: fixed;
-		 word-break: break-all;
+		 /* word-break: break-all; */
 	}
 	#subject {
 		font-size: 45px;
@@ -63,9 +63,9 @@
 		text-align: left;
 		padding-left: 100px !important; 
 	}
-	con {
+	#con {
 		width: 700px !important;
-		text-align: left;
+		text-align: center;
 	}
 	.name {
 		width: 130px !important;
@@ -137,10 +137,13 @@
 		font-size: 15px;
 		cursor:pointer;	
 		border: 0 15px;
+		font-family: 'Hanna', serif;
 		}
 	#bno {
 		border: 1px solid white;
 		text-align: center;
+		font-family: 'Hanna', serif;
+		width: 100px !important;
 	}
 	#re_login {
 		text-align: center;
@@ -186,6 +189,9 @@
 		cursor:pointer;	
 		border: none;
 	}
+	#noreply {
+		text-align: center;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
@@ -228,6 +234,7 @@
 			
 			
 			alert(pcode);
+			
 			if(pcode == 1){
 				location.href="qna.bizpoll";
 			}  else if(code != 1){
@@ -402,8 +409,11 @@
 					</tr> -->
 			<!-- 댓글 -->
 					<tr>
+					<c:if test="${re_count!='0'}">
 						<td class="no">
-							<span id="re">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span id="re_count">${re_count}</span></span>
+							<span id="re">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<span id="re_count">${re_count}</span>
+							</span>
 						</td>
 						<td class="contents" id="recount">
 							<span>&nbsp;</span>
@@ -419,6 +429,12 @@
 						<td class="view">
 							<span>&nbsp;</span>
 						</td>
+					</c:if>
+					<c:if test="${re_count=='0'}">
+						<td colspan="5" id="noreply">
+								<span>등록된 댓글이 없습니다. 댓글을 달아주세요.</span>
+						</td>
+					</c:if>
 					</tr>
 				<c:forEach items="${replyview}" var="replyview">
 					<tr>
@@ -452,30 +468,15 @@
 					<tr>
 						<td colspan="5" bgcolor="#EEEEEE" height="1"></td>
 					</tr>
+					<tr>
 					
 				<c:choose>
 					<c:when test="${empty sessionScope.loginUser}">
-						<tr>
-							<td class="no" >
-								<span>&nbsp;</span>
-							</td>
-							<td class="contents" id="re_login">
+							<td colspan="5" id="re_login">
 								<span id="re_idch"><a href="#" id="login">로그인</a>을 하시면 댓글을 등록하실 수 있습니다.</span>
 							</td>
-							<td class="name">
-								<span>&nbsp;</span>
-							</td>
-							<td class="date">
-								<span>&nbsp;</span>
-							</td>
-							<td class="view">
-								<span>&nbsp;</span>
-							</td>
-						</tr>
 					</c:when>
-					
 					<c:otherwise>
-						<tr>
 							<td class="no" >
 								<span>&nbsp;</span>
 							</td>
@@ -494,10 +495,9 @@
 							<td class="view">
 								<span>&nbsp;</span>
 							</td>
-						</tr>
 					</c:otherwise>
 				</c:choose>
-				
+						</tr>
 				</tbody>
 			</table>
 	</div>

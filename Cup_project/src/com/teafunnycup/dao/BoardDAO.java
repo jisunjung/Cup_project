@@ -233,6 +233,19 @@ public class BoardDAO {
 			}
 			return selflag;
 		}
-	
+		// 검색 게시판 페이지
+		public int boardSPaging(CriteriaDTO criDto) {
+			sqlSession = sqlSessionFactory.openSession();
+			
+			try {
+				result = sqlSession.selectOne("scountPaging", criDto);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			}
+			return result;
+		} 
 }
 

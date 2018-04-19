@@ -90,4 +90,29 @@ public class ReplyDAO {
 			sqlSession.close();
 		}
 	} 
+	
+	// 게시글이 삭제되었을 때의 댓글 삭제
+	// 해당 bno에 해당하는 댓글을 삭제할 것이므로 위의 delete와 다름
+	public int replyDeleteWithBoard(Integer bno) {
+		int rd_result = 0;
+		
+		sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			rd_result = sqlSession.delete("bnoreplydelete", bno);
+			sqlSession.commit();
+			
+			if(rd_result > 0) {
+				System.out.println(bno + "번의 게시글 삭제와 동시에 리플도 함께 삭제 성공");
+			} else {
+				System.out.println(bno + "번의 게시글이 삭제되면서 실행한 리플 삭제 실패");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return rd_result;
+	}
 }

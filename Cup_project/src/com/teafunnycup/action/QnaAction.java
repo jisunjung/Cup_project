@@ -1,6 +1,7 @@
 package com.teafunnycup.action;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -59,6 +60,17 @@ public class QnaAction implements Action {
 		
 		request.setAttribute("pageMaker",  pageMaker);
 		
+		// 오늘 날짜를 보내준다.
+		Date today = new Date();
+		request.setAttribute("today", today);
+		
+		// title 옆에 댓글 수 표시해주기
+		//ReplyDAO rDao = ReplyDAO.getInstance();
+		
+		
+		
+		
+				
 		//System.out.println("게시글 출력 페이지");
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

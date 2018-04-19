@@ -32,6 +32,7 @@ import com.teafunnycup.action.MemberInsertAction;
 import com.teafunnycup.action.QnaAction;
 import com.teafunnycup.action.ReplyAction;
 import com.teafunnycup.action.ReplyDeleteAction;
+import com.teafunnycup.action.TestLoginAction;
 import com.teafunnycup.action.WriteqnaAction;
 
 /**
@@ -143,6 +144,15 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		}  else if(command.equals("/boardsearch.bizpoll")) {
 			action = new BoardSearchAction();
+			forward = action.excute(request, response);
+		}  
+		
+		
+		
+		
+		
+		else if(command.equals("/testlogin.bizpoll")) {
+			action = new TestLoginAction();
 			forward = action.excute(request, response);
 		}
 		

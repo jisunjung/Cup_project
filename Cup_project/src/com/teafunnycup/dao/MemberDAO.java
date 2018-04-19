@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.jdbc.SQL;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
@@ -138,12 +139,13 @@ public class MemberDAO {
 			
 			list = sqlSession.selectList("memLogin",mDto);
 			
-			if(list == null) {
-				System.out.println("ID나 PW가 없는 경우");
-				flag = 0;
-			} else {
+			if(list.size() > 0) {
 				System.out.println("로그인 OK");
 				flag = 1;
+				
+			} else {
+				System.out.println("ID나 PW가 없는 경우");
+				flag = 0;
 			}
 			
 			
@@ -196,5 +198,41 @@ public class MemberDAO {
 			}
 		return mDto;
 	}
+
+	public MemberDTO sessionValue(MemberDTO mDto) {
+		
+		sqlSession = sqlSessionFactory.openSession();
+		
+		try {
+			mDto = sqlSession.selectOne("sessionLogin", mDto);
+			
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return mDto;
+	}
 	
+	public MemberDTO loginCheck(String mid, String mpw){
+		sqlSession = sqlSessionFactory.openSession();
+		MemberDTO mDto=null;
+		try {
+			
+			mDto = new MemberDTO(mid, mpw); // mDto(id, pw)
+			
+			mDto = sqlSession.selectOne("logincheck", mDto); // mDto(id, pw, 기타등등)
+			
+			
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			sqlSession.close();
+		}
+		return mDto;
+	}
 }

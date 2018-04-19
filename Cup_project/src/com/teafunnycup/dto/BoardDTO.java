@@ -9,11 +9,27 @@ public class BoardDTO {
 	 private String writer;
 	 private Date regdate;
 	 private int viewcnt;
+	 private int replycnt;
+	 private int goodcnt;
 	
-	public BoardDTO() {
+	 public BoardDTO() {
 		 
 	 }
-	 
+
+	 public BoardDTO(int bno, String title, String content, String writer, Date regdate, int viewcnt, int replycnt,
+			int goodcnt) {
+		super();
+		this.bno = bno;
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+		this.regdate = regdate;
+		this.viewcnt = viewcnt;
+		this.replycnt = replycnt;
+		this.goodcnt = goodcnt;
+	}
+
+
 
 	public BoardDTO(String title, String content) {
 		super();
@@ -99,4 +115,26 @@ public class BoardDTO {
 		this.viewcnt = viewcnt;
 	}
 	
+	public int getReplycnt() {
+		return replycnt;
+	}
+	
+	
+	public void setReplycnt(int replycnt) {
+		this.replycnt = replycnt;
+	}
+	
+	
+	public int getGoodcnt() {
+		return goodcnt;
+	}
+	
+	
+	public void setGoodcnt(int goodcnt) {
+		this.goodcnt = goodcnt;
+	}
+	
 }
+
+
+

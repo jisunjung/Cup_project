@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 
@@ -16,6 +17,9 @@ public class LoginAjaxAction implements Action{
 	@Override
 	public ActionForward excute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
 		
 		String mid = request.getParameter("id");
 		System.out.println("ID = " + mid);
@@ -29,6 +33,10 @@ public class LoginAjaxAction implements Action{
 				MemberDTO mDto = new MemberDTO(mid, mpw);
 				int flag = mDao.memLogin(mDto);
 				System.out.println("flag = "+ flag);
+				
+				mDto = mDao.sessionValue(mDto);
+				
+				session.setAttribute("loginUser", mDto);
 				
 				JSONObject jObj = new JSONObject();
 				jObj.put("flag", flag);

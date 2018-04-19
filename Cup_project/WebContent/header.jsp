@@ -481,33 +481,32 @@
 				return false;
 			}
 	
-	if(lid != "" || lpw != "") {
-			 $.ajax({
-				 url: "loginajax.bizpoll",
-				 type: "POST",
-				 dataType: "JSON",
-				 data:"id="+ lid +"&pw="+ lpw,
-				 success: function(data) {
-					 if(data.flag == "1"){
-						 alert("로그인 성공");
-						 $("#loginck").val("1");
-						 frm.submit();
-						 //index 페이지로 이동
-					 } else{
-						 alert("로그인 실패");
-						 $("#login_id").select();
-						 $("#err").text("일치하는 회원정보가 없습니다.").css("color","red");
-						 $("#loginck").val("0");
-						 return false; 
-					 }
-				 },
-				 error:function() {
-					 alert("System Error!!!");
+			if(lid != "" || lpw != "") {
+					 $.ajax({
+						 url: "loginajax.bizpoll",
+						 type: "POST",
+						 dataType: "JSON",
+						 data:"id="+ lid +"&pw="+ lpw,
+						 success: function(data) {
+							 if(data.flag == "1"){
+								 alert("로그인 성공");
+								 $("#loginck").val("1");
+								 location.reload();
+							 } else{
+								 alert("로그인 실패");
+								 $("#login_id").select();
+								 $("#err").text("일치하는 회원정보가 없습니다.").css("color","red");
+								 $("#loginck").val("0");
+								 return false; 
+							 }
+						 },
+						 error:function() {
+							 alert("System Error!!!");
+						 }
+					 });
+					 
+					
 				 }
-			 });
-			 
-			
-		 }
 	});
 
 	$(document).on("click", "#logout", function(){
@@ -636,7 +635,7 @@
 							<div id="subtitle"></div>
 							<div id="container">
 								<div id="login_form">
-									<form action="loginck.bizpoll" method="POST" id="login_frm" name="login_frm">
+									<form action="index.bizpoll" method="POST" id="login_frm" name="login_frm">
 										<input class="idpw" type="text" id="login_id" name="login_id" placeholder="ID" />
 										<input class="idpw" type="password" id="login_pw" name="login_pw" placeholder="PASSWORD" />
 										<input type="hidden" id="loginck">
