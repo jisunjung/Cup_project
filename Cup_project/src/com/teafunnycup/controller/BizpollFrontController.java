@@ -19,7 +19,10 @@ import com.teafunnycup.action.BoardSearchAction;
 import com.teafunnycup.action.BoardUpdateSaveAction;
 import com.teafunnycup.action.BoardUpdateViewAction;
 import com.teafunnycup.action.BoardinsertsaveAction;
+import com.teafunnycup.action.CommentListAction;
 import com.teafunnycup.action.ConstractAction;
+import com.teafunnycup.action.DownloadAction;
+import com.teafunnycup.action.GoodPointAction;
 import com.teafunnycup.action.IdOlapCkAction;
 import com.teafunnycup.action.IndexAction;
 import com.teafunnycup.action.LoginAction;
@@ -145,7 +148,17 @@ public class BizpollFrontController extends HttpServlet {
 		}  else if(command.equals("/boardsearch.bizpoll")) {
 			action = new BoardSearchAction();
 			forward = action.excute(request, response);
-		}  
+		}  else if(command.equals("/commentlist.bizpoll")) {
+			action = new CommentListAction();
+			forward = action.excute(request, response);
+		} else if(command.equals("/goodpoint.bizpoll")) {
+			action = new GoodPointAction();
+			forward = action.excute(request, response);
+		} else if(command.equals("/download.bizpoll")) {
+			action = new DownloadAction();
+			forward = action.excute(request, response);
+		}
+		
 		
 		
 		

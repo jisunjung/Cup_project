@@ -59,6 +59,9 @@
 	} */
 	$(document).ready(function() {
 		var formObj = $("#frm1");
+		var rno = $("#rno").val();
+		var bno = $("#bno").val();
+		
 		
 		/* if(window.opener && !window.opener.closed){
 			
@@ -68,7 +71,8 @@
 		
 	// 삭제버튼 클릭
 	$("#remove_btn").on("click", function(){
-		//alert($("#bno").val());
+		alert(bno);
+		
 		formObj.attr("action", "boarddelete.bizpoll");
 		formObj.attr("method", "get");
 		formObj.submit();
@@ -87,21 +91,42 @@
 		self.close();
 	});
 	
+/* 	$("#okay_btn").on("click", function(){
+		sel.close();
+	}) */
+	
 });
 </script>
 </head>
 <body>
-	<div id="popup">
-		<span id="text">글을 삭제하시겠습니까?</span>
-	<form method="post" id="frm1">
+		<%-- <input type="hidden" name="re_count" id="re_count" value="${re_count}"> --%>
+		
+		
+	<%-- <c:choose>
+		<c:when test="${bno != '0'}"> --%>
+			<div id="popup">
 		<input type="hidden" name="bno" id="bno" value="${bno}">
-		<br>
-		<button class="btn" id="remove_btn">삭제</button>
-	</form>
-		<button class="btn" id="cancel_btn">취소</button>
+				<span id="text">글을 삭제하시겠습니까?</span>
+			<form method="post" id="frm1">
+				<br>
+				<button class="btn" id="remove_btn">삭제</button>
+			</form>
+				<button class="btn" id="cancel_btn">취소</button>
+				</div>
+	<%-- 	</c:when>
+	
+		<c:when test="${re_count !='0'}">
+			<div id="popup">
+				<span id="text">해당 글은 댓글이 있어 삭제가 불가 합니다.</span>
+			<form method="post" id="frm1">
+				<br>
+				<button class="btn" id="okay_btn">확인</button>
+			</form>
+				</div>
+		</c:when>
+	</c:choose> --%>
 	
 							
 	
-	</div>
 </body>
 </html>

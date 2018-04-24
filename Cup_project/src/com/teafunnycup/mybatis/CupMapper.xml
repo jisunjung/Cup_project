@@ -56,8 +56,8 @@
   </select>  
   
   <insert id="boardinsert">
-  	INSERT INTO tblboard (bno, title, writer, content) 
-	VALUES(seq_tblboard_bno.nextval, #{title}, #{writer}, #{content})
+  	INSERT INTO tblboard (bno, title, writer, content,filename, filesize, ref, re_step, re_level) 
+	VALUES((SELECT nvl(max(bno)+1, 1)from tblboard), #{title}, #{writer}, #{content}, #{filename}, #{filesize}, (SELECT nvl(max(bno)+1, 1) from tblboard), 1, 0)
   </insert>
   
   <select id="boarddetailview" resultType="boardDTO" parameterType="Integer">
@@ -114,12 +114,35 @@
   		SET viewcnt = viewcnt+1
   		WHERE bno = #{bno}
  	</update> 
-
-	<select id="replyAll" resultType="ReplyDTO" parameterType="Integer">
+ 	
+ <!-- 좋아요 포인트 증가 -->
+ 	<update id="boardGoodCnt">
+  	UPDATE tblboard
+  		SET goodcnt = goodcnt+1
+  		WHERE bno = #{bno}
+ 	</update>
+ 	
+ <!-- 다운로드 수 증가 -->
+ 	<update id="downCount">
+  	UPDATE tblboard
+  		SET downcnt = downcnt+1
+  		WHERE bno = #{bno}
+ 	</update>
+ 	
+<!-- 댓글 출력 -->
+	<!-- <select id="replyAll" resultType="ReplyDTO" parameterType="Integer">
   		<![CDATA[
   			SELECT *
   			FROM tblreply
-  			WHERE bno = #{bno}]]>
+  			WHERE bno = #{bno}
+  			ORDER BY rno ASC]]>
+  	</select> -->
+  	<select id="replyAll" resultType="ReplyDTO" parameterType="Integer">
+  		<![CDATA[
+  			SELECT *
+  			FROM tblreply
+  			WHERE bno = #{bno}
+  			ORDER BY rno ASC]]>
   	</select>
 
  <!-- 댓글 수 카운트 -->
@@ -206,4 +229,12 @@
 		WHERE mid=#{mid} AND mpw=#{mpw}
 	</select>
 	
+	
+	
+	<!-- 파일 다운로드 -->
+	<select id="getFileName" parameterType="Integer" resultType="String" >
+		SELECT filename
+		FROM tblboard
+		WHERE bno= #{bno}
+	</select>
 </mapper>

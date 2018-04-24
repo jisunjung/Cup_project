@@ -67,6 +67,11 @@
 		width: 700px !important;
 		text-align: center;
 	}
+	#re_con{
+		width: 700px;
+		padding-left: 90px;
+		text-align: left;
+	}
 	.name {
 		width: 130px !important;
 		text-align: center;
@@ -101,8 +106,11 @@
 		height: 200px;
 	}
 	#re_input {
-		width: 700px;
+		width: 600px;
 		height: 145px;
+		font-family: 'Hanna', serif;
+		font-size: 18px;
+		color: #ddd;
 	}
 	#rn_input {
 		width: 100px;
@@ -124,6 +132,7 @@
 		/* font-weight: bold; */
 		font-size: 15px;
 		cursor:pointer;	
+		font-family: 'Hanna', serif;
 	}
 	.board_btn {
 		border-radius: 5px;
@@ -144,6 +153,7 @@
 		text-align: center;
 		font-family: 'Hanna', serif;
 		width: 100px !important;
+		font-size: 15px;
 	}
 	#re_login {
 		text-align: center;
@@ -188,16 +198,68 @@
 		font-size: 15px;
 		cursor:pointer;	
 		border: none;
+		font-family: 'Hanna', serif !important;	
 	}
 	#noreply {
 		text-align: center;
+	}
+	#file_upload{
+		font-size: 16px;
+		color: #FFDF24;
+		background-color: white;
+		text-align: center;
+		font-weight: bold;
+	}
+	#good_fafa {
+		color: #FFDF24;
+		font-size: 30px;
+		background-color: white;
+		border: none;
+		text-align: right;
+		height: 36px;
+		line-height: 25px;
+		text-align: center;
+	} 
+	#goodcnt {
+		/* border: 2px solid #FFDF24;  */
+		background-color: white;
+		width:70px;
+		height: 25px;
+		margin-bottom: 10px;
+		font-size: 20px;
+		color: #FFBB00;
+		text-align: center;
+		/* border-radius: 5px; */
+		line-height: 25px;
+		border: none;
+	}
+	#down {
+		text-decoration: none;
+	}
+	#download {
+		color: #a7a7a7;
+	}
+	#downcnt {
+		margin-left: 50px;
+		color: #FFBB00;
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		
+		comment_list();
+		
 		var formObj = $("#frm1");
+		
+		// 좋아요 버튼 클릭
+		/*  $("#good_fafa").on("click", function(){
+			 
+			 $(this).attr("class", "fa fa-heart");
+			alert("좋아요?");
+			location.href="goodpoint.bizpoll";
+		});  */
+		
 		// 목록버튼 클릭
 		$("#list_btn").on("click", function(){
 			//alert("안녕");
@@ -218,32 +280,165 @@
 			var bno = $("#bno").val();
 			var pcode = $("#pcode").val();
 			//alert(bno);
-			// 새창의 크기
-			cw=400;
-			ch=200;
-			// 스크린의 크기
-			sw=screen.availWidth;
-			sh=screen.availHeight;
-			// 팝업 창의 포지션
-			px=(sw-cw)/2;
-			py=(sh-ch)/2;
-			var url = "board_delete_ck.bizpoll?bno=" + bno;
-			/* var url = "board_delete_ck.bizpoll"; */
-			window.open(url,"_blank_1", "toolbar=no, menubar=no, status=no, scrollbars=no, resisable=no, left=" 
-					+ px + ", top=" + py + ",width=" + cw + ",height=" + ch);
+			var replycnt = $("#re_count").val();
 			
-			
-			alert(pcode);
-			
-			if(pcode == 1){
-				location.href="qna.bizpoll";
-			}  else if(code != 1){
-				location.href="index.bizpoll";
+			if(replycnt > 0) {
+				alert("댓글이 있는 글은 삭제하실 수 없습니다.");
+				//$("#knboard_detail_rspan".focus();
+				return false;
+			} else{
+				
+				// 새창의 크기
+				cw=400;
+				ch=200;
+				// 스크린의 크기
+				sw=screen.availWidth;
+				sh=screen.availHeight;
+				// 팝업 창의 포지션
+				px=(sw-cw)/2;
+				py=(sh-ch)/2;
+				var url = "board_delete_ck.bizpoll?bno=" + bno;
+				/* var url = "board_delete_ck.bizpoll"; */
+				window.open(url,"_blank_1", "toolbar=no, menubar=no, status=no, scrollbars=no, resisable=no, left=" 
+						+ px + ", top=" + py + ",width=" + cw + ",height=" + ch);
+				
+				
+				alert(pcode);
+				
+				if(pcode == 1){
+					location.href="qna.bizpoll";
+				}  else if(code != 1){
+					location.href="index.bizpoll";
+				}
+				
 			}
 			
+			
 		});
+				
+		var code = $("#code").val();
+		
+		$("#wr_btn").on("click", function(){
+			//location.href="writeqna.bizpoll";
+			location.href="boardloginck.bizpoll";
+		
+			alert(code);
+		
+		});
+	
+			if(code == 1){
+				alert("모달창 나와랏");
+				$("#id01").css("display","block");
+			} else if(code != 1){
+				$("#id01").css("display","none");
+			}		
+				
+			var replyinsert = $("#replyinsert");
+			
+			/* $("#re_btn").on("click", function(){
+				alert("댓글달기 버튼 클릭!!!!!!!!");
+				replyinsert.submit();
+			}); */		
+				
+		 
 	});
-	$(document).ready(function() {
+		
+		
+	// 댓글 등록 AJAX
+	$(document).on("click", "#re_btn", function(){
+		
+		// 댓글 내용
+		var re_input = $("#re_input").val();
+		
+		// 댓글 작성자
+		var rn_input = $("#rn_input").val();
+		
+		// 댓글 번호
+		var re_bno = $("#re_bno").val();
+		$.ajax({
+			url: "reply.bizpoll",
+			type: "POST",
+			dataType: "json",
+			data: "re_input="+ re_input + "&rn_input=" + rn_input + "&re_bno=" + re_bno,
+			success: function(data) {
+				//alert("댓글 등록 성공");
+				comment_list();
+			},
+			error: function() {
+				alert("System Error!!!");
+			}
+		});
+		
+		
+	});
+	
+	
+	// 댓글 삭제 AJAX
+	$(document).on("click", ".reply_del", function(){
+		var rno = $(this).attr("data_num");
+		//alert("rno =" + rno);
+		//alert("test");
+		// ajax : 비동기 데이터 처리
+		// ( 페이지 이동 없이 데이터 이동이 가능하며 컨트롤러와 모델단을 타고다녀와 원래의 페이지로 돌아오는 것)
+		 $.ajax({
+	 		 url: "replydelete.bizpoll",
+	 		 type: "POST",	// 타입은 뭐로 보내든 상관이 없어요, 뭐든 갔다 돌아오기 때문에
+	 		 dataType: "json",
+	 		 data: "rno=" + rno,
+	 		 success: function(data) {
+	 			//alert("댓글 삭제 성공");
+	 			comment_list();
+	 		 },
+	 		 error: function() {
+	 			 alert("System Error!!!");
+	 		 }
+	 	 });
+	});
+		
+		
+		
+	function comment_list() {
+		var bno = ${boardview.bno};
+		$.ajax({
+			type: "post",
+			url: "commentlist.bizpoll",
+			data: "bno=" + bno,
+			success: function(result) {
+				$("#commentList").html(result);
+			}
+		});
+	}
+		 $(document).on("click", "#good_fafa", function(){
+			alert("좋아요 클릭!");
+			
+			var gpoint = $("#gpoint").val();
+			var bno = ${boardview.bno};
+			$.ajax({
+				url: "goodpoint.bizpoll",
+				type: "POST",
+				dataType: "json",
+				data: "bno=" + bno,
+				success: function(data) {
+							alert(data.gpoint);
+						if(data.gpoint >= "0"){
+							alert("좋아요 포인트 증가 성공");
+							location.reload();
+							$("#good_fafa").attr('class', 'fa fa-heart');
+						} else{
+							 alert("좋아요 포인트 증가 실패");
+							 return false; 
+						 }
+				},
+				error: function() {
+					alert("System Error!!!");
+				}
+			});
+			
+		});  
+		
+		
+		
+	/* $(document).ready(function() {
 		//alert("모달창123");
 		
 		var code = $("#code").val();
@@ -265,8 +460,8 @@
 				
 		
 		
-	});
-	$(document).ready(function() {
+	}); */
+	/* $(document).ready(function() {
 		
 		var replyinsert = $("#replyinsert");
 		
@@ -274,12 +469,49 @@
 			alert("댓글달기 버튼 클릭!!!!!!!!");
 			replyinsert.submit();
 		});
-	});
-</script>
-<script type="text/javascript">
+	}); */
+	
+	
+
+
+
+	/* // 댓글 등록 AJAX
+	$(document).on("click", "#re_btn", function(){
+		
+		// 댓글 내용
+		var re_input = $("#re_input").val();
+		
+		// 댓글 작성자
+		var rn_input = $("#rn_input").val();
+		
+		// 댓글 번호
+		var re_bno = $("#re_bno").val();
+		$.ajax({
+			url: "reply.bizpoll",
+			type: "POST",
+			dataType: "json",
+			data: "re_input="+ re_input + "&rn_input=" + rn_input + "&re_bno=" + re_bno,
+			success: function(data) {
+				//alert("댓글 등록 성공");
+				comment_list();
+			},
+			error: function() {
+				alert("System Error!!!");
+			}
+		});
+		
+		
+	}); */
+
+
+
+
+
+
+	 /* // 댓글 삭제 AJAX
 	$(document).on("click", ".reply_del", function(){
 		var rno = $(this).attr("data_num");
-		alert("rno =" + rno);
+		//alert("rno =" + rno);
 		//alert("test");
 		// ajax : 비동기 데이터 처리
 		// ( 페이지 이동 없이 데이터 이동이 가능하며 컨트롤러와 모델단을 타고다녀와 원래의 페이지로 돌아오는 것)
@@ -288,15 +520,32 @@
 	 		 type: "POST",	// 타입은 뭐로 보내든 상관이 없어요, 뭐든 갔다 돌아오기 때문에
 	 		 dataType: "json",
 	 		 data: "rno=" + rno,
-	 		 success: function(data) {
-	 			alert("댓글 삭제 성공");
-	 			//location
+	 		 /* success: function(data) {
+	 			//alert("댓글 삭제 성공");
+	 			comment_list();
 	 		 },
 	 		 error: function() {
 	 			 alert("System Error!!!");
 	 		 }
 	 	 });
+	});   */
+	
+
+/* 	$(document).ready(function() {
+		comment_list();
 	});
+	
+	function comment_list() {
+		var bno = ${boardview.bno};
+		$.ajax({
+			type: "post",
+			url: "commentlist.bizpoll",
+			data: "bno=" + bno,
+			success: function(result) {
+				$("#commentList").html(result);
+			}
+		});
+	} */
 </script>
 </head>
 <body>
@@ -332,7 +581,7 @@
 					<tr>
 						<td colspan="5" bgcolor="#FFDF24" height="1"></td>
 					</tr>
-			<!-- 작성자 정보 -->
+			<!-- 작성 정보 -->
 					<tr>
 						<td class="no">
 					<form method="post" id="frm1">
@@ -352,6 +601,33 @@
 							<span>${boardview.viewcnt}</span>
 						</td>
 					</tr>
+			<!-- 첨부파일 -->
+			<c:if test="${boardview.filesize > 0}">
+					<tr>
+						<td id="file_upload">
+							<span><i class="fa fa-file"></i></span>
+						</td>
+						<td class="contents">
+							<a href="download.bizpoll?bno=${boardview.bno}" id="down">
+								<span id ="download">${boardview.filename}</span>
+								<span id="downcnt">
+									<i class="fa fa-arrow-circle-o-down"></i>
+									${boardview.downcnt}
+								</span>
+							</a>
+						</td>
+						<td class="name">
+							<span>&nbsp;</span>
+						</td>
+						<td class="date">
+							<span>&nbsp;</span>
+						</td>
+						<td class="view">
+							<span>&nbsp;</span>
+						</td>
+					</tr>
+			</c:if>
+				
 					<tr>
 						<td colspan="5" bgcolor="#ddd" height="1"></td>
 					</tr>
@@ -375,6 +651,7 @@
 							<span>&nbsp;</span>
 						</td>
 					</tr>
+					
 					<tr>
 						<td colspan="5" bgcolor="#ddd" height="1"></td>
 					</tr>
@@ -389,7 +666,9 @@
 							<span>&nbsp;</span>
 						</td>
 						<td class="name">
-							<span>&nbsp;</span>
+							<i id="good_fafa" name="good_fafa" class="fa fa-heart-o"></i>
+							<input type="hidden" id="gpoint" value="${gpoint}" readonly="readonly">
+							<span id="goodcnt">${boardview.goodcnt}</span>
 						</td>
 						<c:if test="${sessionScope.loginUser.mid == boardview.writer}">
 						<td class="date">
@@ -401,69 +680,23 @@
 						</td>
 						</c:if>
 					</tr>
+					
 					<tr>
 						<td colspan="5" bgcolor="white" height="50"></td>
 					</tr>
+					
 					<!-- <tr>
 						<td colspan="5" bgcolor="#ddd" height="1"></td>
 					</tr> -->
-			<!-- 댓글 -->
-					<tr>
-					<c:if test="${re_count!='0'}">
-						<td class="no">
-							<span id="re">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<span id="re_count">${re_count}</span>
-							</span>
-						</td>
-						<td class="contents" id="recount">
-							<span>&nbsp;</span>
-							<%-- <span>${re_count}</span> --%>	
-							<%-- <span>${replyview.size()}</span> --%>
-						</td>
-						<td class="name">
-							<span>&nbsp;</span>
-						</td>
-						<td class="date">
-							<span>&nbsp;</span>
-						</td>
-						<td class="view">
-							<span>&nbsp;</span>
-						</td>
-					</c:if>
-					<c:if test="${re_count=='0'}">
-						<td colspan="5" id="noreply">
-								<span>등록된 댓글이 없습니다. 댓글을 달아주세요.</span>
-						</td>
-					</c:if>
-					</tr>
-				<c:forEach items="${replyview}" var="replyview">
-					<tr>
-						<td colspan="5" bgcolor="#EEEEEE" height="1"></td>
-					</tr>
-					<tr>
-						<td class="no">
-							<span></span>
-						</td>
-						<td class="contents">
-							<span>${replyview.content}</span>
-						</td>
-						<td class="name">
-							<span>${replyview.writer}</span>
-						</td>
-						<td class="date">
-							<span>${replyview.regdate}</span>
-						</td>
-						<c:if test="${sessionScope.loginUser.mid == replyview.writer}">
-						<td class="view">
-							<input type="button" value="삭제" id="remove_rebtn"  class="reply_del" name="input_rno" data_num="${replyview.rno}">
-							<%-- <input type="button" id="remove_rebtn"  value="삭제" data_num="${replyview.rno}"> --%>
-							<%-- <a href="#" id="reply_del">
-							</a> --%>
-						</td>
-						</c:if>
-					</tr>
-				</c:forEach>
+					</tbody>
 					
+					<!-- 댓글 -->
+					<input type="hidden" id="re_count" name="re_count" value=" ${re_count}">
+					<tbody id="commentList"></tbody>
+					
+					<!-- 댓글 등록 -->
+					
+					<tbody>
 					
 					<tr>
 						<td colspan="5" bgcolor="#EEEEEE" height="1"></td>
@@ -482,7 +715,7 @@
 							</td>
 					<form id="replyinsert" name="replyinsert" action="reply.bizpoll" method="post">
 					<input type="hidden" name="re_bno" id="re_bno" value="${boardview.bno}" >
-							<td class="contents">
+							<td id="re_con">
 								<input type="text" id="re_input" name="re_input" placeholder="댓글 작성하기" >
 							</td>
 							<td class="name">

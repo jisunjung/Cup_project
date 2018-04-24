@@ -26,7 +26,7 @@ public class BoardDeleteAction implements Action{
 		System.out.println("******************************NO. "+bno + "삭제요청!!! : BoardDeleteAction");
 		
 		// *** 글이 지워지기 전에 해당 글 번호의 리플 먼저 삭제
-		// 1. 잔업 : 해당 게시글의 리플 삭제
+		// 1. 잔업 : 해당 게시글의 리플 삭제 (cascadeReplyDel)
 		ReplyDAO rDao = ReplyDAO.getInstance();
 		int rd_result = rDao.replyDeleteWithBoard(bno);
 		

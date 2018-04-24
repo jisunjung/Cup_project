@@ -4,6 +4,8 @@ package com.teafunnycup.dao;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
@@ -66,14 +68,14 @@ public class BoardDAO {
 		}
 		
 		// 게시글 등록
-		public int boardInsert(String title, String writer, String content) {
+		public int boardInsert(BoardDTO bDto) {
 			
 			sqlSession = sqlSessionFactory.openSession();
 			
 			try {
-				BoardDTO bDto = new BoardDTO(title, content, writer);
 				result = sqlSession.insert("boardinsert",bDto);
 				sqlSession.commit();
+				
 				System.out.println("result = " + result);
 				
 			} catch(Exception e) {
@@ -156,14 +158,40 @@ public class BoardDAO {
 		}
 		*/
 		// 페이지 totalCount
+		// 뷰 카운트
 		
-		public void boardViewCnt(Integer bno) {
+		public void boardViewCnt(Integer bno, HttpSession countSession) {
 			sqlSession = sqlSessionFactory.openSession();
 			
 			try {
-				sqlSession.update("boardViewCnt", bno);
-				sqlSession.commit();
 				
+				long update_time = 0;
+				
+				
+				// 조회수를 증가할 때 생기는 'read_time_게시글번호'가 없으면
+				// 현재 처음 조회수를 1증가하는 경우임
+				if(countSession.getAttribute("read_time_" + bno) != null) {
+					update_time = (long)countSession.getAttribute("read_time_"+bno);
+				}
+				
+				// 현재시간을 담는다
+				long current_time = System.currentTimeMillis();
+				
+				
+				
+				/* 5초
+				if(current_time - update_time > 5 * 1000) {*/
+				/* 24시간 ( 하루에 한번만 증가)
+				if(current_time - update_time > 24 * 60 * 60 * 1000) {
+				현재시간과 조회수 1증가 한 시간을 비교해서 24시간(1일)이 지났으면 조회수 1 증가 {*/
+				if(current_time - update_time > 24 * 60 * 60 * 1000) {
+					result = sqlSession.update("boardViewCnt", bno);
+					sqlSession.commit();
+					
+					// 조회수 1증가한 시간을 session에 담는다
+					countSession.setAttribute("read_time_"+bno, current_time);
+				}
+
 				if(result > 0) {
 					System.out.println("count 1 증가 성공");
 				} else {
@@ -176,6 +204,27 @@ public class BoardDAO {
 				sqlSession.close();
 			}
 		}
+		
+		// 좋아요♥ 카운트
+		public int boardGpoint(Integer bno) {
+			sqlSession = sqlSessionFactory.openSession();
+			try {
+				result = sqlSession.update("boardGoodCnt",bno);
+				sqlSession.commit();
+				
+				if(result > 0) {
+					System.out.println("♥♥♥좋아요♥♥♥ 포인트 1 증가 성공");
+				} else {
+					System.out.println("ㅠㅠ좋아요ㅠㅠ 포인트 증가 실패");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			} return result;
+		}
+		
 		public List<BoardDTO> boardSearch(CriteriaDTO criDto){
 			sqlSession = sqlSessionFactory.openSession();
 			List<BoardDTO> list = null;
@@ -246,6 +295,46 @@ public class BoardDAO {
 				sqlSession.close();
 			}
 			return result;
-		} 
-}
+		}
+		
+		// 파일 다운로드
+		public String getFileName(Integer bno) {
+			
+			String result = " ";
+			sqlSession = sqlSessionFactory.openSession();
+			
+			try {
+				
+				result = sqlSession.selectOne("getFileName", bno);
+		
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if(sqlSession != null) sqlSession.close();
+			}
+			return result;
+		}
+		
+		public int downCount(Integer bno) {
+			int result = 0;
+			sqlSession = sqlSessionFactory.openSession();
+			
+			try {
+				result = sqlSession.update("downCount",bno);
+				sqlSession.commit();
+				
+				if(result > 0) {
+					System.out.println("다운로드 횟수 1 증가 성공");
+				} else {
+					System.out.println("다운로드 횟수 증가 실패");
+				}
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			} return result;
+		
+		}
+	} 
 

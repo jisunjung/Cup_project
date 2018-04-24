@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
+
 import com.teafunnycup.dao.BoardDAO;
 import com.teafunnycup.dao.ReplyDAO;
 import com.teafunnycup.dto.ReplyDTO;
@@ -33,14 +35,24 @@ public class ReplyAction implements Action{
 		} else {
 			System.out.println("!!!!!댓글 등록 실패!!!!!");
 		}
-		String url = "boarddetail.bizpoll?bno=" + bno;
+		
+		JSONObject jObj = new JSONObject();
+		//jObj.put("result", result);
+		
+		response.setContentType("application/x-json; charset=UTF-8");
+		response.getWriter().println(jObj);
+		
+		System.out.println("AJAX TEST!!!!!! Reply");
+
+		return null;
+		
+	/*String url = "boarddetail.bizpoll?bno=" + bno;
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);
 		forward.setRedirect(false);
 				
-		return forward;
-		
+		return forward;*/
 	}
 	
 

@@ -33,9 +33,17 @@
 		text-align: center;
 	}
 	.contents {
-		width: 700px!important;
+		width: 650px!important;
 		text-align: left;
-		padding-left: 50px; 
+		padding-left: 10px; 
+	}
+	.upload{
+		width: 50px!important;
+		text-align: center;
+		font-size: 16px;
+		color: #FFDF24;
+		font-weight: bold;
+	
 	}
 	.point {
 		width: 50px;
@@ -142,26 +150,31 @@
 	 	line-height: 40px;
 	 	background-color: white;
 	 	font-weight: bold;
+	 	color: #FFDF24;
 	}
 	#pagetable tr, #pagetable td {
 		border: 1px solid #FFDF24;
 	 }
 	 #pagetable tr {
 	 	height: 40px;
+	 	color: #FFDF24;
 	 }
 	 #pagetable td {
 	 	width: 40px;
-	 	color: #FFDF24!important;
+	 	color: #FFDF24;
+	 }
+	 #pagetable td > a {
+	 	color: #FFDF24;
 	 }
 	 .active > a{
-	 	color: #990000!important;
+	 	color: #990000;
 	 }
 	 #big_table {
 	 	margin-bottom: 30px;
 	 }
-	 /* #recount{
+	  #recount{
 	 	color: #990000;
-	 } */
+	 } 
 	 #selsearch {
 		width: 80px;
 		height: 26px;
@@ -287,6 +300,7 @@
 								<tr>
 									<td class="no"><span>NO</span></td>
 									<td class="point"><span>&nbsp;</span></td>
+									<td class="upload">&nbsp;</span></td>
 									<td class="contents" id="contents"><span>CONTENTS</span></td>
 									<td class="name" id="name"><span>NAME</span></td>
 									<td class="date" id="date"><span>DATE</span></td>
@@ -310,6 +324,14 @@
 										<c:if test="${today2 == regdate2}">
 											<span id="new">new</span>
 										</c:if>
+									</td>
+									
+									<td class="upload">
+										<span>&nbsp;
+											<c:if test="${bDto.filesize > 0}">
+											<i class="fa fa-file"></i>
+											</c:if>
+										</span>
 									</td>
 									<td class="contents">
 										<table>
@@ -343,7 +365,7 @@
 									<td class="view" id="view"><span>${bDto.viewcnt}</span></td>
 								</tr>
 								<tr>
-									<td colspan="6" bgcolor="#ddd" height="1"></td>
+									<td colspan="7" bgcolor="#ddd" height="1"></td>
 								</tr>
 								</c:forEach>
 							</tbody>

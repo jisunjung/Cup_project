@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.teafunnycup.dao.BoardDAO;
 import com.teafunnycup.dao.ReplyDAO;
@@ -25,30 +26,16 @@ public class BoardDetailAction implements Action {
 		
 		BoardDAO bDao = BoardDAO.getInstance();
 		
-		// 조회수 1 증가
-		bDao.boardViewCnt(bno);
+		// ---조회수 1 증가---
+		// ***조회수 증가 방지*** (1. IP, 2. Cookie, 3. Session-server)
+		// * Session을 이용한 방법
+		HttpSession session = request.getSession();
+		bDao.boardViewCnt(bno, session);
 		
 		
 		// 상세 게시글 출력
 		BoardDTO bDto = bDao.boardDetailView(bno);
 		request.setAttribute("boardview", bDto);
-		
-		
-		
-		// 상세 게시글 댓글 출력
-		ReplyDAO rDao = ReplyDAO.getInstance();
-		List<ReplyDTO> list = rDao.replySelect(bno);
-		
-		request.setAttribute("replyview", list);
-
-		// 상세 게시글 댓글수 카운트
-		int re_count;
-		
-		re_count = rDao.replyCount(bno);
-		System.out.println("re_count : " + re_count);
-		request.setAttribute("re_count", re_count);
-		
-		
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath(url);

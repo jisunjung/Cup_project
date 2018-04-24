@@ -31,7 +31,7 @@ public class ReplyDAO {
 		
 		try {
 			list = sqlSession.selectList("replyAll", bno);
-			
+	
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -91,7 +91,7 @@ public class ReplyDAO {
 		}
 	} 
 	
-	// 게시글이 삭제되었을 때의 댓글 삭제
+	// 게시글이 삭제되었을 때의 댓글 삭제 (연쇄삭제)
 	// 해당 bno에 해당하는 댓글을 삭제할 것이므로 위의 delete와 다름
 	public int replyDeleteWithBoard(Integer bno) {
 		int rd_result = 0;
@@ -111,7 +111,7 @@ public class ReplyDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			sqlSession.close();
+			if(sqlSession != null) sqlSession.close();
 		}
 		return rd_result;
 	}
