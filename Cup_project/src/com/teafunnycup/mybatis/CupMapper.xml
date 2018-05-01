@@ -7,18 +7,22 @@
 
 <!-- 메인페이지 상품진열 -->
   <!-- 신상품 -->
-  <select id="newpdtview" resultType="pdtDTO" parameterType="String">
-  	SELECT * FROM 
-  	new_pro_view
+  <select id="newpdtview" resultType="pdtDTO">
+  	SELECT * FROM items
+  	WHERE p_class = 'new'
   </select>
   <!-- 인기상품 -->
-  <select id="bestpdtview" resultType="pdtDTO" parameterType="String">
-  	SELECT * FROM 
-  	best_pro_view
+  <select id="bestpdtview" resultType="pdtDTO">
+  	SELECT * FROM items
+  	WHERE p_class = 'best'
   </select>
-  
-  
-  
+ 
+<!-- 상품 상세페이지 이동 -->
+	<select id="productdetailview" resultType="pdtDTO" parameterType="String">
+	  	SELECT * FROM items
+	  	WHERE p_code = #{p_code}
+ 	</select>
+ 	
 <!-- 회원관리 -->
   <!-- 회원가입 -->
   <insert id="memInsert" parameterType="memDTO">
@@ -52,7 +56,7 @@
   
   <select id="boardlistAll" resultType="boardDTO" >
   	SELECT * FROM tblboard
-  	ORDER BY bno DESC
+  	ORDER BY bno ASC
   </select>  
   
   <insert id="boardinsert">
@@ -101,7 +105,7 @@
   								WHERE b.bno = d.bno) replycnt 
   					FROM tblboard b
   					WHERE bno > 0
-  					ORDER BY bno desc
+  					ORDER BY ref DESC, re_step ASC
   				) a
   			)
   			WHERE rnum BETWEEN #{pageStart} AND #{perPageNum}
@@ -154,9 +158,9 @@
 	
  <!-- 댓글 추가 -->	
 	<insert id="replyinsert" parameterType="ReplyDTO" >
-  	INSERT INTO tblreply (rno, bno, content, writer) 
-	VALUES(seq_tblreply_rno.nextval, #{bno}, #{content}, #{writer})
-  </insert>
+	  	INSERT INTO tblreply (rno, bno, content, writer) 
+		VALUES(seq_tblreply_rno.nextval, #{bno}, #{content}, #{writer})
+ 	 </insert>
   
  <!-- 댓글 삭제 -->
  	<delete id="replydelete" parameterType="Integer">
@@ -237,4 +241,22 @@
 		FROM tblboard
 		WHERE bno= #{bno}
 	</select>
+	
+	
+	<!-- 답글 -->
+	<update id="updateStep">
+		UPDATE tblboard
+		SET re_step = re_step + 1
+		WHERE ref = #{ref} AND re_step >= #{re_step} 
+	</update>
+	
+	<!-- 답글추가 -->
+	<insert id="answerInsert" parameterType="boardDTO" >
+	INSERT INTO tblboard (bno, title, writer, content,filename, filesize, ref, re_step, re_level) 
+	VALUES((SELECT nvl(max(bno)+1, 1)from tblboard), #{title}, #{writer}, #{content}, #{filename}, #{filesize}, #{ref}, #{re_step}, #{re_level})
+  </insert>
+	
+	
+	
+	
 </mapper>

@@ -267,7 +267,7 @@
 		position: fixed;
 		bottom: 30px;
 		right: 260px;
-		z-index: 99;
+		z-index: 9999;
 		outline: none;
 		background-color: white;
 		color: #a7a7a7;
@@ -369,17 +369,18 @@
 		color: #333;
 		letter-spacing: -1px;
 		background-color: white;
-		width: 266px;
+		width: 254px;
 		height: 22px;
 		border: 1px solid #e5e5e5;
 		border-radius: 5px;
 		font-weight: normal;
 		font-size: 15px;
 		line-height: 22px;
-		padding: 8px 12px;
+		padding: 8px 0 8px 12px;
 		margin-bottom: 15px;
 		margin-top: 15px;
 		outline: none;
+		font-family: 'Hanna', serif;
 	}
 	
 	#login_form {

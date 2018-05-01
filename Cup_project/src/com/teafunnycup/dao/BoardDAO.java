@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
+import com.sun.corba.se.pept.transport.EventHandler;
 import com.teafunnycup.dto.BoardDTO;
 import com.teafunnycup.dto.CriteriaDTO;
 import com.teafunnycup.mybatis.SqlMapConfig;
@@ -315,6 +316,7 @@ public class BoardDAO {
 			return result;
 		}
 		
+		// 파일 다운로드 횟수 1 증가
 		public int downCount(Integer bno) {
 			int result = 0;
 			sqlSession = sqlSessionFactory.openSession();
@@ -335,6 +337,43 @@ public class BoardDAO {
 				sqlSession.close();
 			} return result;
 		
+		}
+		
+		// 답변
+		public void updateStep(int ref, int re_step) {
+			sqlSession = sqlSessionFactory.openSession();
+			
+			try {
+				BoardDTO bDto = new BoardDTO();
+				bDto.setRef(ref);
+				bDto.setRe_step(re_step);
+				
+				
+				sqlSession.update("updateStep", bDto);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (sqlSession != null) sqlSession.close();
+			}
+			
+		}
+		
+		// 답변 등록
+		public int answerInsert(BoardDTO bDto) {
+			sqlSession = sqlSessionFactory.openSession();
+			int result = 0;
+			
+			try {
+				result = sqlSession.insert("answerInsert", bDto);
+				sqlSession.commit();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (sqlSession != null) sqlSession.close();
+			}
+			return result;
 		}
 	} 
 

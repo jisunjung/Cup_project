@@ -75,6 +75,7 @@
 		width: 1200px;
 		margin: 0 400px;
 		text-decoration: none;
+		position: relative;
 	}
 	
 	button#myBtn {
@@ -101,10 +102,7 @@
 	}
 	.item_list{
 		clear: left;
-	}
-	.item.list2{
-		padding-top: 20px;
-		clear: left;
+		width: 100%;
 	}
 	hr {
 		 border-top-width: 1px;
@@ -122,6 +120,14 @@
 	}
 	.carousel-control.right {
 		background-image: none;
+	}
+	#footer {
+		width: 100%;
+		height: auto;
+		margin-top: 650px!important;
+		/* border: 1px solid red; */
+		position: absolute;
+		
 	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
@@ -189,30 +195,30 @@
 			<hr>
 			<c:forEach items="${newProductList}" var="pDto">
 				<!-- foreach : item은 jstl 태그의 코어라인 var는 변수생성 el태크 -->
-				<div class="gallery">
-
-					<img alt="신상품" src="image/cup_maingallery/${pDto.p_img}"
-						width="180px" height="200px">
-					<div>
-						<div class="desc">${pDto.p_name}</div>
-						<div class="price">
-							<fmt:setLocale value="ko_kr" />
-							<%-- <fmt:setLocale value="en_us"/> --%>
-							<%-- <fmt:setLocale value="ja_jp"/> --%>
-
-							<!--  currency = 접속하는 현지의 화폐단위 -->
-							<fmt:formatNumber value="${pDto.p_price2}" type="currency" />
-							<%-- <fmt:formatDate value="${date}" /> --%>
-							<%-- <fmt:formatDate value="${date}" type="time"/> --%>
-							<%-- <fmt:formatDate value="${date}" type="time" timeStyle="full"/> --%>
-							<%-- <fmt:formatDate value="${date}" type="date" timeStyle="yyyy/mm/dd"/> --%>
-							<%-- <fmt:formatNumber value="0.15" type="percent"/> : 세일 퍼센트--%>
-							<%-- <fmt:formatNumber value="553654789834" pattern="###,###,###,###"/> --%>
-
-						</div>
+					<div class="gallery">
+						<a href="item_detail.bizpoll?p_code=${pDto.p_code}">
+							<img alt="신상품" src="image/cup_maingallery/${pDto.p_img}"
+								width="180px" height="200px">
+							<div>
+								<div class="desc">${pDto.p_name}</div>
+								<div class="price">
+									<fmt:setLocale value="ko_kr" />
+									<%-- <fmt:setLocale value="en_us"/> --%>
+									<%-- <fmt:setLocale value="ja_jp"/> --%>
+		
+									<!--  currency = 접속하는 현지의 화폐단위 -->
+									<fmt:formatNumber value="${pDto.p_price2}" type="currency" />
+									<%-- <fmt:formatDate value="${date}" /> --%>
+									<%-- <fmt:formatDate value="${date}" type="time"/> --%>
+									<%-- <fmt:formatDate value="${date}" type="time" timeStyle="full"/> --%>
+									<%-- <fmt:formatDate value="${date}" type="date" timeStyle="yyyy/mm/dd"/> --%>
+									<%-- <fmt:formatNumber value="0.15" type="percent"/> : 세일 퍼센트--%>
+									<%-- <fmt:formatNumber value="553654789834" pattern="###,###,###,###"/> --%>
+		
+								</div>
+							</div>
+						</a>
 					</div>
-
-				</div>
 			</c:forEach>
 		</div>
 		<div class="item_list">
@@ -220,23 +226,26 @@
 
 			<hr>
 			<c:forEach items="${bestProductList}" var="pDto">
-				<div class="gallery">
-
-					<img alt="인기상품" src="image/cup_maingallery/${pDto.p_img}"
-						width="180px" height="200px">
-					<div>
-						<div class="desc">${pDto.p_name}</div>
-						<div class="price">
-							<fmt:setLocale value="ko_kr" />
-							<!--  currency = 접속하는 현지의 화폐단위 -->
-							<fmt:formatNumber value="${pDto.p_price2}" type="currency" />
-						</div>
+					<div class="gallery">
+						<a href="item_detail.bizpoll?p_code=${pDto.p_code}">
+							<img alt="인기상품" src="image/cup_maingallery/${pDto.p_img}" width="180px" height="200px">
+							<div>
+								<div class="desc">${pDto.p_name}</div>
+								<div class="price">
+									<fmt:setLocale value="ko_kr" />
+									<!--  currency = 접속하는 현지의 화폐단위 -->
+									<fmt:formatNumber value="${pDto.p_price2}" type="currency" />
+								</div>
+							</div>
+						</a>
 					</div>
-
-				</div>
 			</c:forEach>
 		</div>
 	</div>
-
+	<!-- footer 위치 -->
+	<div id="footer">
+		<%@ include file="footer.jsp"%>
+	</div>
+	
 </body>
 </html>

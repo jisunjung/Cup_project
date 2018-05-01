@@ -29,7 +29,7 @@
 	#table_contents, #inner_contents {
 		border-left: none;
 		border-right: none;
-		border-top: 2px solid #FFDF24;
+		/* border-top: 2px solid #FFDF24; */
 		border-bottom : 2px solid #FFDF24; 
 	}
 	table {
@@ -57,9 +57,10 @@
 	.no {
 		width: 100px !important; 
 		text-align: center;
+		border-radius: 5px;
 	}
 	.contents {
-		width: 700px !important;
+		width: 500px !important;
 		text-align: left;
 		padding-left: 100px !important; 
 	}
@@ -72,17 +73,25 @@
 		padding-left: 90px;
 		text-align: left;
 	}
+	#rewrite{
+		width: 700px !important;
+		text-align: left;
+	}
 	.name {
 		width: 130px !important;
 		text-align: center;
+		border-radius: 5px;
 	}
 	.date {
 		width: 170px !important;
 		text-align: center;
+		border-radius: 5px;
 	}
 	.view {
 		width: 100px !important;
 		text-align: center;
+		border-radius: 5px;
+		
 	}
 	#inner_consub {
 		text-align: center;
@@ -106,17 +115,20 @@
 		height: 200px;
 	}
 	#re_input {
-		width: 600px;
+		width: 550px;
 		height: 145px;
 		font-family: 'Hanna', serif;
 		font-size: 18px;
 		color: #ddd;
+		border: 1px solid #ededed;
 	}
 	#rn_input {
 		width: 100px;
 		height: 145px;
 		border: none;
 		text-align: center;
+		font-family: 'Hanna', serif;
+		font-size: 16px;
 	}
 	#page_footer {
 		height: 200px;
@@ -210,7 +222,7 @@
 		text-align: center;
 		font-weight: bold;
 	}
-	#good_fafa {
+	/* #good_fafa {
 		color: #FFDF24;
 		font-size: 30px;
 		background-color: white;
@@ -219,15 +231,15 @@
 		height: 36px;
 		line-height: 25px;
 		text-align: center;
-	} 
+	}  */
 	#goodcnt {
 		/* border: 2px solid #FFDF24;  */
 		background-color: white;
 		width:70px;
 		height: 25px;
 		margin-bottom: 10px;
-		font-size: 20px;
-		color: #FFBB00;
+		//font-size: 20px;
+		//color: #FFBB00;
 		text-align: center;
 		/* border-radius: 5px; */
 		line-height: 25px;
@@ -243,14 +255,125 @@
 		margin-left: 50px;
 		color: #FFBB00;
 	}
+	#fafa_icon, #good_fafa {
+		color: #FFBB00;
+	}
+	#viewcnt, #goodcnt {
+		color: #555555;
+	}
+	#table_top {
+		background-color: #FFDF24;
+		color: white;
+		border-radius: 5px;
+		border: #FFDF24;
+		height: 40px;
+	}
+	
+	
+	
+	
+	
+	
+	.mask {
+ 		width:100%;
+ 		height:100%;
+ 		position:fixed;
+ 		left:0;
+ 		top:0;
+ 		z-index:10;
+ 	}
+ 	#mo_board_del {
+ 		display:none;
+ 		position:relative;
+ 		font-family: 'Hanna', serif;
+ 	}
+ 	#mo_board_del .modal_del {
+ 		width: 180px;
+ 		height: 120px;
+ 		padding: 35px;
+ 		border:1px solid #ccc;
+ 		border-radius: 15px;
+ 		position:fixed;
+ 		left:50%;
+ 		top:50%; 
+ 		z-index:11;
+ 		background:#fff;
+ 		text-align: center;
+ 	}
+	#text {
+		font-size: 15px;
+	}
+	#sel_bbtn{
+		margin: 0 auto;
+	}
+	#remove_btn2 {
+		float: left;
+	}
+	#cancel_bbtn {
+		float: right;
+	}
+	.bbtn{
+		font-family: 'Hanna', serif;
+		margin: 50px 15px 0 15px;
+		color: #555555;
+		padding: 7px 14px;
+		font-size: 15px;
+		cursor:pointer;		
+		background-color: #ededed;
+		border-radius: 5px;
+		border: 1px solid white;
+	}
+	.bbtn:hover {
+		border: 1px solid #ffdf24;
+		background-color: white;
+		color: #ffdf24;
+	}
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
+
+	/* var formObj2 = $("#frm2");
+	var formObj3 = $("#frm3"); */
+	
+	$(document).ready(function(){
+		  var mo_board_del = $("#mo_board_del");
+		  var del_link = $(".del_link");
+		  var modalCont = $(".modal_del");
+		  var marginLeft = modalCont.outerWidth()/2;
+		  var marginTop = modalCont.outerHeight()/2; 
+		 
+		  del_link.click(function(){
+		    mo_board_del.fadeIn("slow");
+		    modalCont.css({"margin-top" : -marginTop, "margin-left" : -marginLeft});
+		    $(this).blur();
+		    $(".modal_del > a").focus(); 
+		    return false;
+		  });
+		  
+	/* // 삭제버튼 클릭
+		  $("#remove_btn2").on("click", function(){
+			formObj2.attr("action", "boarddelete.bizpoll");
+			formObj2.attr("method", "get");
+			formObj2.submit();
+		  }); */
+	
+		  $("#cancel_btn").click(function(){
+		    mo_board_del.fadeOut("slow");
+		    del_link.focus();
+		  });
+		  
+		  $("#okay_btn").click(function(){
+			mo_board_del.fadeOut("slow");
+			del_link.focus();
+		  });        
+		});
+
 	$(document).ready(function() {
+		var formObj = $("#frm1");
 		
 		comment_list();
 		
-		var formObj = $("#frm1");
+		
 		
 		// 좋아요 버튼 클릭
 		/*  $("#good_fafa").on("click", function(){
@@ -273,11 +396,11 @@
 			formObj.submit();
 		});
 		// 삭제버튼 클릭
-		$("#remove_btn").on("click", function(){
+		 /*  $("#remove_btn").on("click", function(){ */
 			/* formObj.attr("method", "get");
 			formObj.submit();  */
 			
-			var bno = $("#bno").val();
+			/* var bno = $("#bno").val();
 			var pcode = $("#pcode").val();
 			//alert(bno);
 			var replycnt = $("#re_count").val();
@@ -299,7 +422,7 @@
 				py=(sh-ch)/2;
 				var url = "board_delete_ck.bizpoll?bno=" + bno;
 				/* var url = "board_delete_ck.bizpoll"; */
-				window.open(url,"_blank_1", "toolbar=no, menubar=no, status=no, scrollbars=no, resisable=no, left=" 
+				/* window.open(url,"_blank_1", "toolbar=no, menubar=no, status=no, scrollbars=no, resisable=no, left=" 
 						+ px + ", top=" + py + ",width=" + cw + ",height=" + ch);
 				
 				
@@ -314,7 +437,7 @@
 			}
 			
 			
-		});
+		}); */   
 				
 		var code = $("#code").val();
 		
@@ -343,6 +466,27 @@
 		 
 	});
 		
+	$(document).ready(function(){
+		  var mo_board_del = $("#mo_board_del");
+		  var del_link = $(".del_link");
+		  var modalCont = $(".modal_del");
+		  var marginLeft = modalCont.outerWidth()/2;
+		  var marginTop = modalCont.outerHeight()/2; 
+		 
+		  del_link.click(function(){
+		    mo_board_del.fadeIn("slow");
+		    modalCont.css({"margin-top" : -marginTop, "margin-left" : -marginLeft});
+		    $(this).blur();
+		    $(".modal_del > a").focus(); 
+		    return false;
+		  });
+		 
+		  $(".modal_del > button").click(function(){
+		    mo_board_del.fadeOut("slow");
+		    del_link.focus();
+		  });        
+		});
+	
 		
 	// 댓글 등록 AJAX
 	$(document).on("click", "#re_btn", function(){
@@ -435,7 +579,9 @@
 			});
 			
 		});  
-		
+		$(document).on("click", "#rewrite_btn", function(){
+			location.href="answer.bizpoll?bno=${boardview.bno}";
+		});
 		
 		
 	/* $(document).ready(function() {
@@ -557,30 +703,28 @@
 		<div>
 			<input type="hidden" name="code" id="code" value="${code}">
 			<span width="100">&nbsp;</span>
-			<span><a href="#"><input type="button" id="wr_btn" value="글쓰기"></a></span>
+			
+			
+			
+			
 		</div>
-			<table id="table_contents">
+		
+			<table id="table_top">
 				<tbody>
 					<tr>
-						<td class="no">
-							<span>NO</span>
-						</td>
-						<td id="con">
-							<span>CONTENTS</span>
-						</td>
-						<td class="name">
-							<span>NAME</span>
-						</td>
-						<td class="date">
-							<span>DATE</span>
-						</td>
-						<td class="view">
-							<span>VIEW</span>
-						</td>
+						<td class="no"><span>NO</span></td>
+						<td id="con"><span>CONTENTS</span></td>
+						<td class="name"><span>NAME</span></td>
+						<td class="date"><span>DATE</span></td>
+						<td class="view"><span>&nbsp;</span></td>
 					</tr>
-					<tr>
+				</tbody>
+			</table>
+			<table id="table_contents">
+				<tbody>
+					<!-- <tr>
 						<td colspan="5" bgcolor="#FFDF24" height="1"></td>
-					</tr>
+					</tr> -->
 			<!-- 작성 정보 -->
 					<tr>
 						<td class="no">
@@ -598,7 +742,12 @@
 							<span>${boardview.regdate}</span>
 						</td>
 						<td class="view">
-							<span>${boardview.viewcnt}</span>
+							<i id="fafa_icon" class="fa fa-eye"></i>
+							<span id="viewcnt">${boardview.viewcnt}</span>
+							&nbsp;&nbsp;
+							<i id="good_fafa" name="good_fafa" class="fa fa-heart-o"></i>
+							<input type="hidden" id="gpoint" value="${gpoint}" readonly="readonly">
+							<span id="goodcnt">${boardview.goodcnt}</span>
 						</td>
 					</tr>
 			<!-- 첨부파일 -->
@@ -662,25 +811,40 @@
 						<td class="no" id="list">
 							<input type="button" class="board_btn" id="list_btn" value="목록">
 						</td>
-						<td class="contents">
-							<span>&nbsp;</span>
+						<td id="rewrite">
+							<c:choose>
+								<c:when test="${empty sessionScope.loginUser}">
+									<span>&nbsp;</span>
+								</c:when>
+								<c:otherwise>
+									<input type="button" class="board_btn" id="rewrite_btn" value="답변">
+								</c:otherwise>
+							</c:choose>
 						</td>
-						<td class="name">
-							<i id="good_fafa" name="good_fafa" class="fa fa-heart-o"></i>
-							<input type="hidden" id="gpoint" value="${gpoint}" readonly="readonly">
-							<span id="goodcnt">${boardview.goodcnt}</span>
-						</td>
-						<c:if test="${sessionScope.loginUser.mid == boardview.writer}">
-						<td class="date">
-							<input type="button" class="board_btn" id="modify_btn"  value="수정">
-						</td>
+						<c:choose>
+							<c:when test="${sessionScope.loginUser.mid == boardview.writer}">
+								<td class="name">
+									<input type="button" class="board_btn" id="modify_btn"  value="수정">
+								</td>
+								<td class="date">
+									<a href="#mo_board_del" class="del_link"><input type="button" class="board_btn" id="remove_btn"  value="삭제"></a>
+									<input type="hidden" name="pcode" id="pcode" value="${pcode}">
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td class="name">
+									<span>&nbsp;</span>
+								</td>
+								<td class="date">
+									<span>&nbsp;</span>
+								</td>
+							</c:otherwise>
+						</c:choose>
 						<td class="view">
-							<input type="button" class="board_btn" id="remove_btn"  value="삭제">
-							<input type="hidden" name="pcode" id="pcode" value="${pcode}">
+							<a href="#"><input type="button" id="wr_btn" value="글쓰기"></a>
 						</td>
-						</c:if>
+						
 					</tr>
-					
 					<tr>
 						<td colspan="5" bgcolor="white" height="50"></td>
 					</tr>
@@ -706,7 +870,7 @@
 				<c:choose>
 					<c:when test="${empty sessionScope.loginUser}">
 							<td colspan="5" id="re_login">
-								<span id="re_idch"><a href="#" id="login">로그인</a>을 하시면 댓글을 등록하실 수 있습니다.</span>
+								<span id="re_idch"><a href="#" id="login">로그인</a>을 하시면 댓글과 답변을 등록하실 수 있습니다.</span>
 							</td>
 					</c:when>
 					<c:otherwise>
@@ -736,7 +900,38 @@
 	</div>
 	<div id="page_footer">
 		<span>&nbsp;</span>
+	</div> 
+	
+	<!-- footer 위치 -->
+	<div id="footer">
+		<%@ include file="footer.jsp"%>
 	</div>
+	
+<!-- 게시글 삭제 확인 모달창 -->
+	<div id="mo_board_del">
+	  <div class="modal_del">
+	  	<c:choose>
+			<c:when test="${bno != '0'}">
+						<span id="text">글을 삭제하시겠습니까?</span>
+					<div id="sel_bbtn">
+							<br>
+							<a href="boarddelete.bizpoll?bno=${boardview.bno}">
+								<button class="bbtn" id="remove_btn2">삭제</button>
+							</a>
+							<button class="bbtn" id="cancel_btn">취소</button>
+					</div>
+			</c:when>
+			<c:when test="${re_count !='0'}">
+						<span id="text">해당 글은 댓글이 있어 삭제가 불가 합니다.</span>
+				<div id="sel_bbtn">
+						<br>
+						<button class="bbtn" id="okay_btn">확인</button>
+				</div>
+			</c:when>
+		</c:choose>
+		</div>
+	</div>
+	
 </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 
 import com.teafunnycup.common.DBManager;
+import com.teafunnycup.dto.BoardDTO;
 import com.teafunnycup.dto.ProductDTO;
 import com.teafunnycup.mybatis.SqlMapConfig;
 
@@ -62,4 +63,31 @@ public class ProductDAO {
 			
 			return list_best;
 		}
+	// 상품상세 조회
+		public ProductDTO productDetailView(String p_code){
+			
+			ProductDTO pDto = null;
+			sqlSession = sqlSessionFactory.openSession();
+			
+			
+			try {
+				
+				pDto = sqlSession.selectOne("productdetailview", p_code);
+				
+				System.out.print(pDto.getP_code() + ", ");
+				System.out.print(pDto.getP_class() + ", ");
+				System.out.print(pDto.getP_name() + ", ");
+				System.out.print(pDto.getP_price2() + ", ");
+				System.out.print(pDto.getP_img() + ", ");
+				System.out.print(pDto.getP_detailimg());
+				System.out.println();
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			}
+			return pDto;
+		}
+		
 }

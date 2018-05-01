@@ -17,13 +17,13 @@ public class BoardDeleteAction implements Action{
 			throws ServletException, IOException {
 		String url = null;
 		
-		//String bno = request.getParameter("bno");
+		/*String bno = request.getParameter("bno");*/
 		Integer bno = Integer.parseInt(request.getParameter("bno"));
 		//String writer = request.getParameter("writer");
 		//String title = request.getParameter("title");
 		//System.out.println(bno + ", " + title + ", " + writer);
 		
-		System.out.println("******************************NO. "+bno + "삭제요청!!! : BoardDeleteAction");
+		System.out.println("******************************NO. "+ bno + "삭제요청!!! : BoardDeleteAction");
 		
 		// *** 글이 지워지기 전에 해당 글 번호의 리플 먼저 삭제
 		// 1. 잔업 : 해당 게시글의 리플 삭제 (cascadeReplyDel)

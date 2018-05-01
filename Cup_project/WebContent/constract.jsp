@@ -11,6 +11,7 @@
 	div#container {
 		position: relative;
 		/* border: 1px solid red; */
+		margin: 50px;
 	}
 	div.lang {
 		position: absolute;
@@ -417,6 +418,11 @@
 		</form>
 		<br>
 		<br>
+	</div>
+	
+	<!-- footer 위치 -->
+	<div id="footer">
+		<%@ include file="footer.jsp"%>
 	</div>
 </body>
 </html>

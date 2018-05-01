@@ -11,7 +11,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>QnA</title>
-<!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
 <style type="text/css">
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 /* font-family: 'Nanum Gothic', serif; */
@@ -57,12 +56,13 @@
 		text-align: center;
 	}
 	.date {
-		width: 170px!important;
+		width: 140px!important;
 		text-align: center;
 	}
 	.view {
-		width: 100px!important;
+		width: 130px!important;
 		text-align: center;
+		padding-right: 30px;
 	}
 	#re {
 		color: #990000;
@@ -85,6 +85,9 @@
 		border-bottom : 2px solid #FFDF24;
 		width: 1200px;
 		height: 40px;
+		background-color: #FFDF24;
+		color: white;
+		border-radius: 5px;
 	}
 	.qnasearch {
 		float: right;
@@ -141,8 +144,13 @@
 	a {
 		text-decoration: none;
 	}
+	/* #page_wrap {
+		text-align: center;
+	} */
 	#pageline {
 		text-align: center;
+		float: none;
+		margin: 25px 550px;
 	}
 	#pagetable {
 		border-collapse: collapse;
@@ -157,15 +165,13 @@
 	 }
 	 #pagetable tr {
 	 	height: 40px;
-	 	color: #FFDF24;
 	 }
 	 #pagetable td {
 	 	width: 40px;
-	 	color: #FFDF24;
 	 }
-	 #pagetable td > a {
+	 #pagetable td > a{
 	 	color: #FFDF24;
-	 }
+	 } 
 	 .active > a{
 	 	color: #990000;
 	 }
@@ -197,6 +203,13 @@
 		border-radius: 5px;
 		padding: 1px 3px;
 	}
+	#fafa_icon, #good_fafa {
+		color: #FFBB00;
+	}
+	#viewcnt, #goodcnt {
+		color: #555555;
+	}
+	
 </style>
 <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
@@ -304,7 +317,7 @@
 									<td class="contents" id="contents"><span>CONTENTS</span></td>
 									<td class="name" id="name"><span>NAME</span></td>
 									<td class="date" id="date"><span>DATE</span></td>
-									<td class="view" id="view"><span>VIEW</span></td>
+									<td class="view" id="view"><span>&nbsp;</span></td>
 								</tr>
 							</tbody>
 						</table>
@@ -338,7 +351,12 @@
 											<tr>
 												<td>
 													<a href="boarddetail.bizpoll?bno=${bDto.bno}">
-														<span class="text_black">${bDto.title}&nbsp;&nbsp;&nbsp;</span>
+														<span class="text_black">
+															<c:forEach var ="i" begin="1" end="${bDto.re_level}">
+																&nbsp;&nbsp;&nbsp;
+															</c:forEach>
+															${bDto.title}&nbsp;&nbsp;&nbsp;
+															</span>
 														<c:if test="${bDto.replycnt!='0'}">
 															<span id="recount">(${bDto.replycnt})</span>
 														</c:if>
@@ -362,7 +380,20 @@
 											</c:otherwise>
 										</c:choose>
 									</td>
-									<td class="view" id="view"><span>${bDto.viewcnt}</span></td>
+									<td class="view" id="view">
+										<i id="fafa_icon" class="fa fa-eye"></i>
+										<span id="viewcnt">${bDto.viewcnt}</span>
+										&nbsp;&nbsp;
+										<c:choose>
+											<c:when test="${bDto.goodcnt > 0}">
+												<i id="good_fafa" class="fa fa-heart"></i>
+											</c:when>
+											<c:otherwise>
+												<i id="good_fafa" class="fa fa-heart-o"></i>
+											</c:otherwise>
+										</c:choose>
+												<span id="goodcnt">${bDto.goodcnt}</span>
+									</td>
 								</tr>
 								<tr>
 									<td colspan="7" bgcolor="#ddd" height="1"></td>
@@ -374,29 +405,36 @@
 				</tr>
 			</tbody>
 		</table>
-		<div id="pageline">
-			<table id="pagetable">
-					<tr>
-						<c:if test="${pageMaker.prev}">
-							<td>
-								<a href="qna.bizpoll?page=${pageMaker.startPage - 1}">◀</a>
-							</td>
-						</c:if>
-						<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
-							<td>
-								<a <c:out value="${pageMaker.criDto.page == idx? 'class=active':''}"/>></a>
-								<a href="qna.bizpoll?page=${idx}">${idx}</a>
-							</td>
-						</c:forEach>
-						<c:if test="${pageMaker.next}">
-							<td>
-								<a href="qna.bizpoll?page=${pageMaker.endPage + 1}">▶</a>
-							</td>
-						</c:if>
-					</tr>
-			</table>
+		<div id="page_wrap">
+			<div id="pageline">
+				<table id="pagetable">
+						<tr>
+							<c:if test="${pageMaker.prev}">
+								<td>
+									<a href="qna.bizpoll?page=${pageMaker.startPage - 1}">◀</a>
+								</td>
+							</c:if>
+							<c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="idx">
+								<td>
+									<a <c:out value="${pageMaker.criDto.page == idx? 'class=active':''}"/>></a>
+									<a href="qna.bizpoll?page=${idx}">${idx}</a>
+								</td>
+							</c:forEach>
+							<c:if test="${pageMaker.next}">
+								<td>
+									<a href="qna.bizpoll?page=${pageMaker.endPage + 1}">▶</a>
+								</td>
+							</c:if>
+						</tr>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
+
+<!-- footer 위치 -->
+	<div id="footer">
+		<%@ include file="footer.jsp"%>
+	</div>
 </body>
 </html>

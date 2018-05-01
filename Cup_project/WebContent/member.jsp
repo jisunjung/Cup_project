@@ -30,7 +30,7 @@
 		}
 	#join_page {
 		width: 1200px;
-		margin: 10px 360px;
+		margin: 100px 360px 100px 360px;
 		font-size: 14px;
 		}
 	#mem_join {
@@ -47,7 +47,7 @@
 	}
 	#mem_inner {
 		text-align: left;
-		font-size: 15px;
+		font-size: 16px;
 	}
 	.div_input{
 		margin-top: 15px;
@@ -72,9 +72,9 @@
 		color: white;
 		background-color: black;
 		border-radius: 3px;
-		font-size: 14px;
+		font-size: 16px;
 		line-height: 12px;
-		height: 16px;
+		/* height: 16px; */
 		text-align: center;
 	}
 	
@@ -87,6 +87,7 @@
 		background-color: #ededed;
 		border-radius: 5px;
 		border: 1px solid white;
+		font-family: 'Hanna', serif;
 	}
 	#btn_success:hover {
 		border: 1px solid #ffdf24;
@@ -103,8 +104,14 @@
 	.inputbox {
 		width: 130px;
 	}
-	#page_footer {
-		height: 200px;
+	#selmail {
+		font-family: 'Hanna', serif;
+		font-size: 16px;
+	}
+	#add_btn {
+		font-family: 'Hanna', serif;
+		font-size: 16px;
+		padding: 3px 6px;
 	}
 </style>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -447,8 +454,10 @@
 		</form>
 		<center><input type="button" id="btn_success" value="회원가입 작성완료"></center>
 	</div>
-	<div id="page_footer">
-		<span>&nbsp;</span>
+
+	<!-- footer 위치 -->
+	<div id="footer">
+		<%@ include file="footer.jsp"%>
 	</div>
 </body>
 </html>

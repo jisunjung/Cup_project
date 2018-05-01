@@ -24,10 +24,9 @@ public class IndexAction implements Action{
 			
 		}*/
 		
-		
+		// 상품 상세페이지
 		//ProductDAO pDao = new ProductDAO();
 		ProductDAO pDao = ProductDAO.getInstance();
-		
 		
 		// 신상품
 		List<ProductDTO> newProductList = pDao.listNewProduct(); 

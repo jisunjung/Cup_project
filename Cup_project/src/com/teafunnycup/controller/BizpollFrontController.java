@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.teafunnycup.action.Action;
 import com.teafunnycup.action.ActionForward;
+import com.teafunnycup.action.AnswerAction;
+import com.teafunnycup.action.AnswerInsertsaveAction;
 import com.teafunnycup.action.BoardDeleteAction;
 import com.teafunnycup.action.BoardDeleteChekeAction;
 import com.teafunnycup.action.BoardDetailAction;
@@ -25,6 +27,7 @@ import com.teafunnycup.action.DownloadAction;
 import com.teafunnycup.action.GoodPointAction;
 import com.teafunnycup.action.IdOlapCkAction;
 import com.teafunnycup.action.IndexAction;
+import com.teafunnycup.action.ItemDetailAction;
 import com.teafunnycup.action.LoginAction;
 import com.teafunnycup.action.LoginAjaxAction;
 import com.teafunnycup.action.LoginCkAction;
@@ -157,10 +160,16 @@ public class BizpollFrontController extends HttpServlet {
 		} else if(command.equals("/download.bizpoll")) {
 			action = new DownloadAction();
 			forward = action.excute(request, response);
-		}
-		
-		
-		
+		} else if(command.equals("/answer.bizpoll")) {
+			action = new AnswerAction();
+			forward = action.excute(request, response);
+		} else if(command.equals("/answerinsertsave.bizpoll")) {
+				action = new AnswerInsertsaveAction();
+			forward = action.excute(request, response);
+		} else if(command.equals("/item_detail.bizpoll")) {
+			action = new ItemDetailAction();
+			forward = action.excute(request, response);
+		}  
 		
 		
 		
