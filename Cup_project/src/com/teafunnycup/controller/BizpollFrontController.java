@@ -16,6 +16,7 @@ import com.teafunnycup.action.AnswerInsertsaveAction;
 import com.teafunnycup.action.BoardDeleteAction;
 import com.teafunnycup.action.BoardDeleteChekeAction;
 import com.teafunnycup.action.BoardDetailAction;
+import com.teafunnycup.action.BoardLineUpNoAction;
 import com.teafunnycup.action.BoardLoginChekeAction;
 import com.teafunnycup.action.BoardSearchAction;
 import com.teafunnycup.action.BoardUpdateSaveAction;
@@ -168,6 +169,9 @@ public class BizpollFrontController extends HttpServlet {
 			forward = action.excute(request, response);
 		} else if(command.equals("/item_detail.bizpoll")) {
 			action = new ItemDetailAction();
+			forward = action.excute(request, response);
+		} else if(command.equals("/boardlineup_no.bizpoll")) {
+			action = new BoardLineUpNoAction();
 			forward = action.excute(request, response);
 		}  
 		

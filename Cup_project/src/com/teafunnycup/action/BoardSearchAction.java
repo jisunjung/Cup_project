@@ -44,7 +44,6 @@ public class BoardSearchAction implements Action {
 		criDto.setPage(page);
 		
 		// 검색된 게시판 리스트 출력
-		
 		criDto.setFlag(flag);		// criDto에 검색조건 입력
 		BoardDAO bDao = BoardDAO.getInstance();		//BoardDAO bDao = new BoardDAO();
 		String keyword = request.getParameter("search_keyword");

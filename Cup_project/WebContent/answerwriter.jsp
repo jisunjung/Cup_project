@@ -218,7 +218,7 @@
 						<span>&nbsp;</span>
 					</td>
 					<td>
-						<input type="text" id="sub_input" name="title" value="RE: ${boardview.title}" readonly="readonly">
+						<input type="text" id="sub_input" name="title" value="┗RE: ${boardview.title}" readonly="readonly">
 					</td>
 					<td class="empty">
 						<span>&nbsp;</span>

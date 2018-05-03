@@ -28,6 +28,27 @@ public class QnaAction implements Action {
 		
 		//request.setAttribute("qna", qna_list);
 		
+		
+		//**********************************정렬***************************//
+		String lineup_code = request.getParameter("lineup_value");
+		System.out.println("lineup_code : " + lineup_code);
+		/*if(lineup_code.equals("l_no")) {
+			System.out.println("게시판 번호순으로 정렬");
+		} else if(lineup_code.equals("l_contents")) {
+			System.out.println("게시판 제목순으로 정렬");
+		} else if(lineup_code.equals("l_name")) {
+			System.out.println("게시판 작성자순으로 정렬");
+		} else if(lineup_code.equals("l_date")) {
+			System.out.println("게시판 날짜순으로 정렬");
+		} else if(lineup_code.equals("l_view")) {
+			System.out.println("게시판 조회순으로 정렬");
+		} else if(lineup_code.equals("l_good")) {
+			System.out.println("게시판 좋아요순으로 정렬");
+		}*/
+		//**********************************정렬***************************//
+		
+		
+		
 		// 게시판 페이지
 		CriteriaDTO criDto = new CriteriaDTO();
 		int page = 1;		// 최초의 페이지
@@ -36,6 +57,11 @@ public class QnaAction implements Action {
 		}
 		System.out.println("페이지 번호 : " + page);
 		criDto.setPage(page);
+
+		//**********************************정렬***************************//
+		/*criDto.setLineup_code(lineup_code);*/
+		//**********************************정렬***************************//
+		
 		
 		// 객체 생성 DB이용
 		BoardDAO bDao = BoardDAO.getInstance();		//BoardDAO bDao = new BoardDAO();

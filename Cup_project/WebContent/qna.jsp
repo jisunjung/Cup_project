@@ -89,6 +89,9 @@
 		color: white;
 		border-radius: 5px;
 	}
+	.lineup {
+		color: white;
+	}
 	.qnasearch {
 		float: right;
 	}
@@ -203,6 +206,14 @@
 		border-radius: 5px;
 		padding: 1px 3px;
 	}
+	#new_lineup {
+		color: white;
+		border: 1px solid white;
+		font-size: 14px;
+		background-color: #FFDF24;
+		border-radius: 5px;
+		padding: 1px 3px;
+	}
 	#fafa_icon, #good_fafa {
 		color: #FFBB00;
 	}
@@ -240,9 +251,10 @@
 			var bnoform = $("#bnoform");
 			bnoform.submit();
 		
-});
+	});
 	
-	$(document).on("click","#qnasearch_btn",function(){
+	// 게시판 검색
+	$(document).on("click", "#qnasearch_btn",function(){
 		//alert("test");
 		
 		$("#frm_search").submit();
@@ -250,6 +262,17 @@
 		$("#searchkey_ms").css("color","#555555");
 		$("#key").css("display", "block"); */
 		
+		
+	});
+	
+	var lineup_code = $("#lineup_code").val();
+	// 게시판 정렬
+	$(document).on("click", "#l_no", function(){
+		//alert("게시글 번호순 정렬클릭 test");
+		/* $("#lineup_code").val(l_no);
+		alert($("#lineup_code").val()); */
+		location.href="qna.bizpoll?lineup_code=" + "l_no";
+		//$("#frm_lineup").submit();
 		
 	});
 	/* $(document).ready(function(){
@@ -308,19 +331,52 @@
 				</tr>
 				<tr>
 					<td id="table_top">
+					<!-- <form action="boardlineup_no.bizpoll" method="GET" id="frm_lineup" name="frm_lineup"> -->
+					<form action="qna.bizpoll" method="GET" id="frm_lineup" name="frm_lineup">
+						<input type="hidden" name="lineup_code" value="">
 						<table>
 							<tbody>
 								<tr>
-									<td class="no"><span>NO</span></td>
-									<td class="point"><span>&nbsp;</span></td>
-									<td class="upload">&nbsp;</span></td>
-									<td class="contents" id="contents"><span>CONTENTS</span></td>
-									<td class="name" id="name"><span>NAME</span></td>
-									<td class="date" id="date"><span>DATE</span></td>
-									<td class="view" id="view"><span>&nbsp;</span></td>
+									<td class="no">
+										<a href="#" id="l_no" class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_no"> -->
+											<span>NO</span>
+										</a>
+									</td>
+									<td class="point"></td>
+									<td class="upload"></td>
+									<td class="contents" id="contents">
+										<a href="#"  id="l_contents"  class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_contents"> -->
+											<span>CONTENTS</span>
+										</a>
+									</td>
+									<td class="name" id="name">
+										<a href="#"  id="l_name" class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_name"> -->
+											<span>NAME</span></a>
+										</td>
+									<td class="date" id="date">
+										<a href="#"  id="l_date" class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_date"> -->
+											<span>DATE</span>
+										</a>
+									</td>
+									<td class="view" id="view">
+										<a href="#"  id="l_view" class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_view"> -->
+											<span><i class="fa fa-eye"></i></span>
+										</a>
+										<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										<a href="#" id="l_good"  class="lineup">
+											<!-- <input type="hidden" name="lineup_value" value="l_good"> -->
+											<span><i class="fa fa-heart"></i></span>
+										</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
+					</form>
 					</td>
 				</tr>
 				

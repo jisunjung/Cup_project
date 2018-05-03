@@ -214,6 +214,7 @@
 	}
 	#noreply {
 		text-align: center;
+		padding-bottom: 20px;
 	}
 	#file_upload{
 		font-size: 16px;

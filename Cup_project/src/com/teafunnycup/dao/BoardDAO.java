@@ -236,9 +236,9 @@ public class BoardDAO {
 				System.out.println("Keyword ===>" + criDto.getKeyword());
 				System.out.println("Flag ===>" + flag);
 				
-				if(flag.equals("1")) {
+				/*if(flag.equals("1")) {
 					
-				}
+				}*/
 				
 				list = sqlSession.selectList("boardSearch", criDto);
 				
@@ -374,6 +374,25 @@ public class BoardDAO {
 				if (sqlSession != null) sqlSession.close();
 			}
 			return result;
+		}
+		
+		// 게시판 정렬하기
+		public List<BoardDTO> lineup(CriteriaDTO criDto){
+			sqlSession = sqlSessionFactory.openSession();
+			List<BoardDTO> list = null;
+			
+			String lineup_code = criDto.getLineup_code();
+			System.out.println("정렬 코드 ===>" + lineup_code);
+			
+			try {
+				list = sqlSession.selectList("boardlineup", criDto);
+				
+			} catch(Exception e) {
+				e.printStackTrace();
+			} finally {
+				sqlSession.close();
+			}
+			return list;
 		}
 	} 
 
