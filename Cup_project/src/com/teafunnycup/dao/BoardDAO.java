@@ -32,6 +32,9 @@ public class BoardDAO {
 			sqlSession = sqlSessionFactory.openSession();
 			List<BoardDTO> list = new ArrayList<>();
 			
+			String lineup_code = criDto.getLineup_code();
+			System.out.println(lineup_code);
+			
 			try {
 				list = sqlSession.selectList("listCriteria", criDto);
 				

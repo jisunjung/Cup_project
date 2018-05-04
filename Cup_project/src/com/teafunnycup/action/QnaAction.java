@@ -30,7 +30,7 @@ public class QnaAction implements Action {
 		
 		
 		//**********************************정렬***************************//
-		String lineup_code = request.getParameter("lineup_value");
+		String lineup_code = request.getParameter("lineup_code");
 		System.out.println("lineup_code : " + lineup_code);
 		/*if(lineup_code.equals("l_no")) {
 			System.out.println("게시판 번호순으로 정렬");
@@ -59,7 +59,7 @@ public class QnaAction implements Action {
 		criDto.setPage(page);
 
 		//**********************************정렬***************************//
-		/*criDto.setLineup_code(lineup_code);*/
+		criDto.setLineup_code(lineup_code);
 		//**********************************정렬***************************//
 		
 		

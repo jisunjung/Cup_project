@@ -273,7 +273,21 @@
 		alert($("#lineup_code").val()); */
 		location.href="qna.bizpoll?lineup_code=" + "l_no";
 		//$("#frm_lineup").submit();
-		
+	});
+	$(document).on("click", "#l_contents", function(){
+		location.href="qna.bizpoll?lineup_code=" + "l_contents";
+	});
+	$(document).on("click", "#l_name", function(){
+		location.href="qna.bizpoll?lineup_code=" + "l_name";
+	});
+	$(document).on("click", "#l_date", function(){
+		location.href="qna.bizpoll?lineup_code=" + "l_date";
+	});
+	$(document).on("click", "#l_view", function(){
+		location.href="qna.bizpoll?lineup_code=" + "l_view";
+	});
+	$(document).on("click", "#l_good", function(){
+		location.href="qna.bizpoll?lineup_code=" + "l_good";
 	});
 	/* $(document).ready(function(){
 		var listcounter = $("#listcounter").val();
