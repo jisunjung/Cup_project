@@ -580,7 +580,7 @@
 		<div id="topArea" class="inner">
 			<div class="head_inner">
 				<!-- <a href="index.html"><img id="logo" src=image/cup_main03.jpg></a> -->
-				<a href="index.bizpoll"><img id="logo01" src=image/logo_1.png></a>
+				<a href="index.bizpoll"><img id="logo01" src="image/logo_1.png"></a>
 				<div id="line2_search">
 					<!-- <div id="line2_wrap">
 						<input id="search_keyword" name="search_keyword" type="text" placeholder="검색어를 입력해주세요.">
